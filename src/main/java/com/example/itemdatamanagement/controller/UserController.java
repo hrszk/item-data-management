@@ -11,12 +11,17 @@ import com.example.itemdatamanagement.domain.User;
 import com.example.itemdatamanagement.form.InsertUserForm;
 import com.example.itemdatamanagement.service.UserService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping({ "", "/" })
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HttpSession session;
 
     @GetMapping("/toPageUserRegister")
     public String toPageUserRegister() {
@@ -30,5 +35,22 @@ public class UserController {
 
         userService.insertUser(user);
         return "user/login";
+    }
+
+    @GetMapping("/toPageUserLogin")
+    public String toPageUserLogin() {
+        return "user/login";
+    }
+
+    @PostMapping("/userLogin")
+    public String userLogin(String mailAddress, String password) {
+        User user = userService.findByMailAddressAndPassword(mailAddress, password);
+        if (user == null) {
+            return "user/login";
+        } else {
+            session.setAttribute("user", user);
+            return "redirect:/findAll";
+        }
+
     }
 }
