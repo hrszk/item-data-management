@@ -26,4 +26,16 @@ public class ItemController {
         model.addAttribute("itemAndCategoryList", itemAndCategoryList);
         return "item/list";
     }
+
+    @GetMapping("/showItemDetail")
+    public String showItemDetail(Integer id, Model model) {
+        ItemAndCategory itemAndCategory = itemService.findById(id);
+        model.addAttribute("itemAndCategory", itemAndCategory);
+        return "item/detail";
+    }
+
+    @GetMapping("/toPageItemList")
+    public String toPageItemList() {
+        return "redirect:/findAll";
+    }
 }

@@ -116,10 +116,13 @@
                 </thead>
                 <tbody>
                     <tr th:each="item : ${itemAndCategoryList}">
-                        <td class="item-name"><a href="./detail.html">
+                        <td class="item-name">
+                            <a th:href="@{'/showItemDetail?id='+${item.id}}">
                                 <span th:text="${item.name}">
                                     Razer BlackWidowChroma Keyboard
-                                </span></a></td>
+                                </span>
+                            </a>
+                        </td>
                         <td class="item-price" th:text="${item.price}">52.0</td>
                         <td class="item-category">
                             <!-- <a href="">Electronics</a> / <a href="">Computers &amp; Tablets</a> /

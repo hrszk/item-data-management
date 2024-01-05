@@ -28,4 +28,8 @@ public class ItemService {
     // return itemRepository.findByIdCategory(id);
     // }
 
+    public ItemAndCategory findById(Integer id) {
+        return itemRepository.findById(id);
+    }
+
 }
