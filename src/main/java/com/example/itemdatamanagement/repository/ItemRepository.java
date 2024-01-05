@@ -101,4 +101,28 @@ public class ItemRepository {
     // CATEGORY_ROW_MAPPER);
     // return category;
     // }
+
+    public List<ItemAndCategory> findByName(String name) {
+        String findByNameSql = """
+                SELECT
+                    i.id AS i_id,
+                    i.name AS i_name,
+                    i.condition,
+                    i.category,
+                    c.name AS c_name,
+                    c.parent_id,
+                    c.name_all,
+                    i.brand,
+                    i.price,
+                    i.stock,
+                    i.shopping,
+                    i.description
+                from items i
+                INNER join category c ON i.category=c.id
+                WHERE i.name LIKE '%:name%';
+                    """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+        List<ItemAndCategory> itemAndCategoryList = template.query(findByNameSql, param, ITEMANDCATEGORY_ROW_MAPPER);
+        return itemAndCategoryList;
+    }
 }

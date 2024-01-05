@@ -20,12 +20,8 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    // public List<Item> findAllItem() {
-    // return itemRepository.findAllItem();
-    // }
-
-    // public Category findByIdCategory(Integer id) {
-    // return itemRepository.findByIdCategory(id);
-    // }
+    public List<ItemAndCategory> findByName(String Name) {
+        return itemRepository.findByName(Name);
+    }
 
 }

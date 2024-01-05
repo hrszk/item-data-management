@@ -26,4 +26,11 @@ public class ItemController {
         model.addAttribute("itemAndCategoryList", itemAndCategoryList);
         return "item/list";
     }
+
+    @GetMapping("/findByName")
+    public String findByName(String name, Model model) {
+        List<ItemAndCategory> itemAndCategoryList = itemService.findByName(name);
+        model.addAttribute("itemAndCategoryList", itemAndCategoryList);
+        return "item/list";
+    }
 }
