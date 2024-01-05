@@ -31,7 +31,9 @@
         <div class="panel panel-default">
             <div class="panel-heading">Login</div>
             <div class="panel-body">
-                <p class="text-danger">error:failed to login</p>
+                <p class="text-danger" th:if="${error != null}">
+                    <span th:text="${error}"></span>
+                </p>
                 <form th:action="@{/userLogin}" method="post">
                     <div class="form-group">
                         <label for="mailAddress">mail address</label>

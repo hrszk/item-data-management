@@ -3,6 +3,7 @@ package com.example.itemdatamanagement.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,9 +44,10 @@ public class UserController {
     }
 
     @PostMapping("/userLogin")
-    public String userLogin(String mailAddress, String password) {
-        User user = userService.findByMailAddressAndPassword(mailAddress, password);
+    public String userLogin(String mailAddress,String password,Model model) { 
+        User user = userService.findByMailAddressAndPassword(mailAddress,password);
         if (user == null) {
+            model.addAttribute("error","error:failed to login");
             return "user/login";
         } else {
             session.setAttribute("user", user);
