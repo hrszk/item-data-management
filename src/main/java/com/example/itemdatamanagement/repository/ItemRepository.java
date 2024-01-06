@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 
@@ -48,15 +47,6 @@ public class ItemRepository {
     // item.setShopping(rs.getInt("shopping"));
     // item.setDescription(rs.getString("description"));
     // return item;
-    // };
-
-    // private static final RowMapper<Category> CATEGORY_ROW_MAPPER = (rs, i) -> {
-    // Category category = new Category();
-    // category.setId(rs.getInt("id"));
-    // category.setName(rs.getString("name"));
-    // category.setParentId(rs.getInt("parent_id"));
-    // category.setNameAll(rs.getString("name_all"));
-    // return category;
     // };
 
     public List<ItemAndCategory> findAll() {
