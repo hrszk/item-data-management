@@ -38,4 +38,9 @@ public class ItemController {
     public String toPageItemList() {
         return "redirect:/findAll";
     }
+
+    @GetMapping("/toPageAddItem")
+    public String toPageAddItem() {
+        return "item/add";
+    }
 }
