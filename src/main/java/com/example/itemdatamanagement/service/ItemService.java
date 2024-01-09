@@ -24,4 +24,8 @@ public class ItemService {
         return itemRepository.findByName(Name);
     }
 
+    public ItemAndCategory findById(Integer id) {
+        return itemRepository.findById(id);
+    }
+
 }
