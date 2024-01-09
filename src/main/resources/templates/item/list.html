@@ -60,11 +60,15 @@
                 <div class="form-group">
                     <select class="form-control">
                         <option>- parentCategory -</option>
-                        <option>parentCategory1</option>
-                        <option>parentCategory2</option>
+                        <option th:each="parentCategory : ${parentCategoryList}">
+                            <span th:text="${parentCategory.name}">
+                                parentCategory1
+                            </span>
+                        </option>
+                        <!-- <option>parentCategory2</option>
                         <option>parentCategory3</option>
                         <option>parentCategory4</option>
-                        <option>parentCategory5</option>
+                        <option>parentCategory5</option> -->
                     </select>
                     <select class="form-control">
                         <option>- childCategory -</option>

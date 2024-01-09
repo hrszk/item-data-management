@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.itemdatamanagement.domain.ItemAndCategory;
+import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ItemService;
 
 @Controller
@@ -18,10 +19,16 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping("/findAll")
     public String findAll(Model model) {
         List<ItemAndCategory> itemAndCategoryList = itemService.findAll();
         model.addAttribute("itemAndCategoryList", itemAndCategoryList);
+
+        List<Category> parentCategoryList = categoryService.findAllParentCategory();
+        model.addAttribute("parentCategoryList", parentCategoryList);
         return "item/list";
     }
 
