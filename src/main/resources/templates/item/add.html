@@ -53,9 +53,9 @@
         <form th:action="@{/addItem}" method="post" class="form-horizontal">
             <!-- name -->
             <div class="form-group">
-                <label for="trainName" class="col-sm-2 control-label">name</label>
+                <label for="name" class="col-sm-2 control-label">name</label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control" id="trainName" name="trainName" />
+                    <input type="text" class="form-control" id="name" name="name" />
                     <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                 <label for="parentCategory" class="col-sm-2 control-label">category</label>
                 <div class="col-sm-8">
                     <select class="form-control" name="parentCategory">
-                        <option>-- parentCategory --</option>
+                        <option value="">-- parentCategory --</option>
                         <option>parentCategory1</option>
                     </select>
                 </div>
@@ -81,7 +81,7 @@
                 <label for="childCategory" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
                     <select class="form-control" name="childCategory">
-                        <option>-- childCategory --</option>
+                        <option value="">-- childCategory --</option>
                         <option>childCategory1</option>
                     </select>
                 </div>
@@ -90,7 +90,7 @@
                 <label for="grandChild" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
                     <select class="form-control" name="grandChild">
-                        <option>-- grandChild --</option>
+                        <option value="">-- grandChild --</option>
                         <option>grandChild1</option>
                     </select>
                 </div>

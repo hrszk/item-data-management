@@ -23,7 +23,7 @@ public class OriginalRepository {
         original.setCategoryName(rs.getString("category_name"));
         original.setBrandName(rs.getString("brand_name"));
         original.setPrice(rs.getDouble("price"));
-        original.setShopping(rs.getInt("shipping"));
+        original.setShipping(rs.getInt("shipping"));
         original.setItemDescription(rs.getString("item_description"));
         return original;
     };
@@ -31,7 +31,7 @@ public class OriginalRepository {
     public void insertOriginal(Original original) {
         String insertOriginalSql = """
                 INSERT INTO original(name,item_condition_id,category_name,brand_name,price,shipping,item_description)
-                VALUES(:name,:itemConditionId,:categoryName,:brandName,:price,:shipping,itemDescription);
+                VALUES(:name,:itemConditionId,:categoryName,:brandName,:price,:shipping,:itemDescription);
                     """;
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(original);

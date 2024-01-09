@@ -4,13 +4,12 @@ public class InsertItemForm {
 
     private String name;
     private double price;
-    private String categoryName;
     private String parentCategory;
     private String childCategory;
     private String grandChild;
     private String brandName;
     private Integer itemConditionId;
-    private Integer shopping;
+    private Integer shipping;
     private String itemDescription;
 
     public String getName() {
@@ -27,14 +26,6 @@ public class InsertItemForm {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
     }
 
     public String getParentCategory() {
@@ -78,11 +69,11 @@ public class InsertItemForm {
     }
 
     public Integer getShopping() {
-        return shopping;
+        return shipping;
     }
 
-    public void setShopping(Integer shopping) {
-        this.shopping = shopping;
+    public void setShopping(Integer shipping) {
+        this.shipping = shipping;
     }
 
     public String getItemDescription() {
@@ -95,9 +86,9 @@ public class InsertItemForm {
 
     @Override
     public String toString() {
-        return "AddItemForm [name=" + name + ", price=" + price + ", categoryName=" + categoryName + ", parentCategory="
+        return "AddItemForm [name=" + name + ", price=" + price + ", parentCategory="
                 + parentCategory + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brandName="
-                + brandName + ", itemConditionId=" + itemConditionId + ", shopping=" + shopping + ", itemDescription="
+                + brandName + ", itemConditionId=" + itemConditionId + ", shipping=" + shipping + ", itemDescription="
                 + itemDescription + "]";
     }
 

@@ -58,11 +58,11 @@ public class Original {
         this.price = price;
     }
 
-    public Integer getShopping() {
+    public Integer getShipping() {
         return shipping;
     }
 
-    public void setShopping(Integer shipping) {
+    public void setShipping(Integer shipping) {
         this.shipping = shipping;
     }
 

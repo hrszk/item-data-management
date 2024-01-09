@@ -16,7 +16,7 @@ import ch.qos.logback.core.joran.util.beans.BeanUtil;
 
 @Controller
 @RequestMapping({ "", "/" })
-public class ItemInsertController {
+public class InsertItemController {
 
     @Autowired
     private OriginalService originalService;
@@ -28,11 +28,24 @@ public class ItemInsertController {
 
     @PostMapping("/addItem")
     public String addItem(InsertItemForm form, Model model) {
-        String categoryName = form.getParentCategory() + "/" + form.getChildCategory() + "/" + form.getGrandChild();
+
+        String categoryName = "";
+        if (form.getParentCategory() != "" && form.getChildCategory() != "" && form.getGrandChild() != "") {
+            categoryName = form.getParentCategory() + "/" + form.getChildCategory() + "/" + form.getGrandChild();
+        } else if (form.getParentCategory() != "" && form.getChildCategory() != "" && form.getGrandChild() == "") {
+            categoryName = form.getParentCategory() + "/" + form.getChildCategory();
+        } else if (form.getParentCategory() != "" && form.getChildCategory() == "" && form.getGrandChild() == "") {
+            categoryName = form.getParentCategory();
+        } else {
+            categoryName = null;
+        }
+
         Original original = new Original();
         BeanUtils.copyProperties(form, original);
         original.setCategoryName(categoryName);
+        original.setShipping(0);
 
-        return "item/list";
+        originalService.insertOriginal(original);
+        return "redirect:/findAll";
     }
 }
