@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.itemdatamanagement.domain.Category;
-import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ItemService;
@@ -34,6 +32,13 @@ public class ItemController {
         return "item/list";
     }
 
+    @GetMapping("/findByName")
+    public String findByName(String name, Model model) {
+        List<ItemAndCategory> itemAndCategoryList = itemService.findByName(name);
+        model.addAttribute("itemAndCategoryList", itemAndCategoryList);
+        return "item/list";
+    }
+
     @GetMapping("/showItemDetail")
     public String showItemDetail(Integer id, Model model) {
         ItemAndCategory itemAndCategory = itemService.findById(id);
@@ -44,5 +49,10 @@ public class ItemController {
     @GetMapping("/toPageItemList")
     public String toPageItemList() {
         return "redirect:/findAll";
+    }
+
+    @GetMapping("/toPageAddItem")
+    public String toPageAddItem() {
+        return "item/add";
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 
 @Repository
@@ -34,20 +33,6 @@ public class ItemRepository {
         itemAndCategory.setDescription(rs.getString("description"));
         return itemAndCategory;
     };
-
-    // private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
-    // Item item = new Item();
-    // item.setId(rs.getInt("id"));
-    // item.setName(rs.getString("name"));
-    // item.setCondition(rs.getInt("condition"));
-    // item.setCategory(rs.getInt("category"));
-    // item.setBrand(rs.getString("brand"));
-    // item.setPrice(rs.getDouble("price"));
-    // item.setStock(rs.getInt("stock"));
-    // item.setShopping(rs.getInt("shopping"));
-    // item.setDescription(rs.getString("description"));
-    // return item;
-    // };
 
     public List<ItemAndCategory> findAll() {
         String findAllSql = """
@@ -75,40 +60,47 @@ public class ItemRepository {
         return itemAndCategoryList;
     }
 
-    // public List<Item> findAllItem() {
-    // String findAllItemSql = "SELECT
-    // id,name,condition,category,brand,price,stock,shopping,description FROM items
-    // LIMIT 30;";
-    // List<Item> itemList = template.query(findAllItemSql, ITEM_ROW_MAPPER);
-    // return itemList;
-    // }
-
-    // public Category findByIdCategory(Integer id) {
-    // String findByIdCategorySql = "SELECT id,name,parent_id,name_all FROM category
-    // WHERE id=:id;";
-    // SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-    // Category category = template.queryForObject(findByIdCategorySql, param,
-    // CATEGORY_ROW_MAPPER);
-    // return category;
-    // }
+    public List<ItemAndCategory> findByName(String name) {
+        String findByNameSql = """
+                SELECT
+                                    i.id AS i_id,
+                                    i.name AS i_name,
+                                    i.condition,
+                                    i.category,
+                                    c.name AS c_name,
+                                    c.parent_id,
+                                    c.name_all,
+                                    i.brand,
+                                    i.price,
+                                    i.stock,
+                                    i.shopping,
+                                    i.description
+                                from items i
+                                INNER join category c ON i.category=c.id
+                    WHERE i.name LIKE '%:name%';
+                    """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+        List<ItemAndCategory> itemAndCategoryList = template.query(findByNameSql, param, ITEMANDCATEGORY_ROW_MAPPER);
+        return itemAndCategoryList;
+    }
 
     public ItemAndCategory findById(Integer id) {
         String findByIdSql = """
                 SELECT
-                    i.id AS i_id,
-                    i.name AS i_name,
-                    i.condition,
-                    i.category,
-                    c.name AS c_name,
-                    c.parent_id,
-                    c.name_all,
-                    i.brand,
-                    i.price,
-                    i.stock,
-                    i.shopping,
-                    i.description
-                from items i
-                INNER join category c ON i.category=c.id
+                                i.id AS i_id,
+                                i.name AS i_name,
+                                i.condition,
+                                i.category,
+                                c.name AS c_name,
+                                c.parent_id,
+                                c.name_all,
+                                i.brand,
+                                i.price,
+                                i.stock,
+                                i.shopping,
+                                i.description
+                            from items i
+                            INNER join category c ON i.category=c.id
                 WHERE i.id=:id;
                     """;
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
