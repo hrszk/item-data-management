@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ItemService;
@@ -51,8 +52,4 @@ public class ItemController {
         return "redirect:/findAll";
     }
 
-    @GetMapping("/toPageAddItem")
-    public String toPageAddItem() {
-        return "item/add";
-    }
 }

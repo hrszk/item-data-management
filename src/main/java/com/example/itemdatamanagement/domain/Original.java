@@ -7,7 +7,7 @@ public class Original {
     private String categoryName;
     private String brandName;
     private double price;
-    private Integer shopping;
+    private Integer shipping;
     private String itemDescription;
 
     public Integer getTrainId() {
@@ -59,11 +59,11 @@ public class Original {
     }
 
     public Integer getShopping() {
-        return shopping;
+        return shipping;
     }
 
-    public void setShopping(Integer shopping) {
-        this.shopping = shopping;
+    public void setShopping(Integer shipping) {
+        this.shipping = shipping;
     }
 
     public String getItemDescription() {
@@ -77,8 +77,8 @@ public class Original {
     @Override
     public String toString() {
         return "Original [trainId=" + trainId + ", name=" + name + ", itemConditionId=" + itemConditionId
-                + ", categoryName=" + categoryName + ", brandName=" + brandName + ", price=" + price + ", shopping="
-                + shopping + ", itemDescription=" + itemDescription + "]";
+                + ", categoryName=" + categoryName + ", brandName=" + brandName + ", price=" + price + ", shipping="
+                + shipping + ", itemDescription=" + itemDescription + "]";
     }
 
 }

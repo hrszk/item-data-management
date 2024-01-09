@@ -50,7 +50,7 @@
         <h2>Add</h2>
 
         <!-- add form -->
-        <form action="#" method="POST" class="form-horizontal">
+        <form th:action="@{/addItem}" method="post" class="form-horizontal">
             <!-- name -->
             <div class="form-group">
                 <label for="trainName" class="col-sm-2 control-label">name</label>
@@ -134,8 +134,7 @@
             <div class="form-group">
                 <label for="itemDescription" class="col-sm-2 control-label">description</label>
                 <div class="col-sm-8">
-                    <textarea name="description" id="itemDescription" class="form-control" rows="5"
-                        name="itemDescription"></textarea>
+                    <textarea id="itemDescription" class="form-control" rows="5" name="itemDescription"></textarea>
                     <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>

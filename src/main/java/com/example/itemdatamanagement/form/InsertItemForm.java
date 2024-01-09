@@ -1,6 +1,6 @@
 package com.example.itemdatamanagement.form;
 
-public class AddItemForm {
+public class InsertItemForm {
 
     private String name;
     private double price;

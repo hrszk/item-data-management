@@ -29,7 +29,7 @@ public class ItemRepository {
         itemAndCategory.setBrand(rs.getString("brand"));
         itemAndCategory.setPrice(rs.getDouble("price"));
         itemAndCategory.setStock(rs.getInt("stock"));
-        itemAndCategory.setShopping(rs.getInt("shopping"));
+        itemAndCategory.setShipping(rs.getInt("shipping"));
         itemAndCategory.setDescription(rs.getString("description"));
         return itemAndCategory;
     };
@@ -47,7 +47,7 @@ public class ItemRepository {
                 	i.brand,
                 	i.price,
                 	i.stock,
-                	i.shopping,
+                	i.shipping,
                 	i.description
                 from items i
                 INNER join category c ON i.category=c.id
@@ -73,7 +73,7 @@ public class ItemRepository {
                                     i.brand,
                                     i.price,
                                     i.stock,
-                                    i.shopping,
+                                    i.shipping,
                                     i.description
                                 from items i
                                 INNER join category c ON i.category=c.id
@@ -97,7 +97,7 @@ public class ItemRepository {
                                 i.brand,
                                 i.price,
                                 i.stock,
-                                i.shopping,
+                                i.shipping,
                                 i.description
                             from items i
                             INNER join category c ON i.category=c.id

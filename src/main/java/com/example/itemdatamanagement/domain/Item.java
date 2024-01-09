@@ -23,7 +23,7 @@ public class Item {
     private Integer stock;
 
     // ショッピング
-    private Integer shopping;
+    private Integer shipping;
 
     // 説明
     private String description;
@@ -85,11 +85,11 @@ public class Item {
     }
 
     public Integer getShopping() {
-        return shopping;
+        return shipping;
     }
 
-    public void setShopping(Integer shopping) {
-        this.shopping = shopping;
+    public void setShopping(Integer shipping) {
+        this.shipping = shipping;
     }
 
     public String getDescription() {
@@ -103,7 +103,7 @@ public class Item {
     @Override
     public String toString() {
         return "Item [id=" + id + ", name=" + name + ", condition=" + condition + ", category=" + category
-                + ", brand=" + brand + ", price=" + price + ", stock=" + stock + ", shopping=" + shopping
+                + ", brand=" + brand + ", price=" + price + ", stock=" + stock + ", shipping=" + shipping
                 + ", description=" + description + "]";
     }
 }

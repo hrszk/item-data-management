@@ -29,7 +29,7 @@ public class ItemAndCategory {
     private Integer stock;
 
     // ショッピング
-    private Integer shopping;
+    private Integer shipping;
 
     // 説明
     private String description;
@@ -114,12 +114,12 @@ public class ItemAndCategory {
         this.stock = stock;
     }
 
-    public Integer getShopping() {
-        return shopping;
+    public Integer getShipping() {
+        return shipping;
     }
 
-    public void setShopping(Integer shopping) {
-        this.shopping = shopping;
+    public void setShipping(Integer shipping) {
+        this.shipping = shipping;
     }
 
     public String getDescription() {
@@ -134,7 +134,7 @@ public class ItemAndCategory {
     public String toString() {
         return "ItemAndCategory [id=" + id + ", name=" + name + ", condition=" + condition + ", category=" + category
                 + ", categoryName=" + categoryName + ", parentId=" + parentId + ", NameAll=" + NameAll + ", brand="
-                + brand + ", price=" + price + ", stock=" + stock + ", shopping=" + shopping + ", description="
+                + brand + ", price=" + price + ", stock=" + stock + ", shipping=" + shipping + ", description="
                 + description + "]";
     }
 
