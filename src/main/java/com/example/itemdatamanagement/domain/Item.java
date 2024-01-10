@@ -84,11 +84,11 @@ public class Item {
         this.stock = stock;
     }
 
-    public Integer getShopping() {
+    public Integer getShipping() {
         return shipping;
     }
 
-    public void setShopping(Integer shipping) {
+    public void setShipping(Integer shipping) {
         this.shipping = shipping;
     }
 

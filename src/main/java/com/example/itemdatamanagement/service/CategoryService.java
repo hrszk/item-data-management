@@ -17,4 +17,8 @@ public class CategoryService {
     public List<Category> findAllParentCategory() {
         return categoryRepository.findAllParentCategory();
     }
+
+    public void deleteCategory(Integer id) {
+        categoryRepository.deleteCategory(id);
+    }
 }

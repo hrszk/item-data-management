@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.itemdatamanagement.domain.Category;
+import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ItemService;
@@ -18,10 +20,10 @@ import com.example.itemdatamanagement.service.ItemService;
 public class ItemController {
 
     @Autowired
-    private ItemService itemService;
+    private CategoryService categoryService;
 
     @Autowired
-    private CategoryService categoryService;
+    private ItemService itemService;
 
     @GetMapping("/findAll")
     public String findAll(Model model) {
@@ -49,6 +51,15 @@ public class ItemController {
 
     @GetMapping("/toPageItemList")
     public String toPageItemList() {
+        return "redirect:/findAll";
+    }
+
+    @PostMapping("/deleteItem")
+    public String deleteItem(Integer id) {
+        Item item = itemService.findByIdItem(id);
+        Integer categoryId = item.getCategory();
+        categoryService.deleteCategory(categoryId);
+        itemService.deleteItem(id);
         return "redirect:/findAll";
     }
 

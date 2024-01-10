@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 
 @Repository
@@ -34,6 +35,20 @@ public class ItemRepository {
         return itemAndCategory;
     };
 
+    private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
+        Item item = new Item();
+        item.setId(rs.getInt("id"));
+        item.setName(rs.getString("name"));
+        item.setCondition(rs.getInt("condition"));
+        item.setCategory(rs.getInt("category"));
+        item.setBrand(rs.getString("brand"));
+        item.setPrice(rs.getDouble("price"));
+        item.setStock(rs.getInt("stock"));
+        item.setShipping(rs.getInt("shipping"));
+        item.setDescription(rs.getString("description"));
+        return item;
+    };
+
     public List<ItemAndCategory> findAll() {
         String findAllSql = """
                 SELECT
@@ -51,6 +66,7 @@ public class ItemRepository {
                 	i.description
                 from items i
                 INNER join category c ON i.category=c.id
+                WHERE deleted=false
                 ORDER by i_id
                 LIMIT 30;
                                 """;
@@ -107,4 +123,19 @@ public class ItemRepository {
         ItemAndCategory itemAndCategory = template.queryForObject(findByIdSql, param, ITEMANDCATEGORY_ROW_MAPPER);
         return itemAndCategory;
     }
+
+    public void deleteItem(Integer id) {
+        String deleteItemSql = "UPDATE items SET deleted=true WHERE id=:id;";
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        template.update(deleteItemSql, param);
+    }
+
+    public Item findByIdItem(Integer id) {
+        String sql = "SELECT * FROM items WHERE id=:id;";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
+        return item;
+    }
+
 }

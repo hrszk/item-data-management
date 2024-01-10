@@ -28,4 +28,12 @@ public class ItemService {
         return itemRepository.findById(id);
     }
 
+    public void deleteItem(Integer id) {
+        itemRepository.deleteItem(id);
+    }
+
+    public Item findByIdItem(Integer id) {
+        return itemRepository.findByIdItem(id);
+    }
+
 }
