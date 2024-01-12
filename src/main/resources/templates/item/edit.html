@@ -46,7 +46,8 @@
 
     <!-- details -->
     <div id="input-main" class="container">
-        <a type="button" class="btn btn-default" href="./detail.html"><i class="fa fa-reply"></i> back</a>
+        <a type="button" class="btn btn-default" th:href="@{'/showItemDetail?id='+${item.id}}"><i
+                class="fa fa-reply"></i> back</a>
         <h2>Edit</h2>
 
         <!-- edit form -->
