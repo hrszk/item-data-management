@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -138,4 +139,12 @@ public class ItemRepository {
         return item;
     }
 
+    public void updeteItem(Item item) {
+        String sql = """
+                UPDATE items SET name=:name,price=:price,category=:category,brand=:brand,condition=:condition,description=:description
+                WHERE id=:id;
+                """;
+        SqlParameterSource param = new BeanPropertySqlParameterSource(item);
+        template.update(sql, param);
+    }
 }
