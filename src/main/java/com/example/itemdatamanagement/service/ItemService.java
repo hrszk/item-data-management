@@ -36,4 +36,8 @@ public class ItemService {
         return itemRepository.findByIdItem(id);
     }
 
+    public void updateItem(Item item) {
+        itemRepository.updeteItem(item);
+    }
+
 }

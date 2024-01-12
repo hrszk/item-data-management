@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.itemdatamanagement.domain.Item;
@@ -21,6 +22,14 @@ public class UpdateItemController {
         Item item = itemService.findByIdItem(id);
         model.addAttribute("item", item);
         return "item/edit";
+    }
+
+    @PostMapping("/updateItem")
+    public String updateItem(Item item) {
+        Item item2 = itemService.findByIdItem(item.getId());
+        item.setCategory(item2.getCategory());
+        itemService.updateItem(item);
+        return "redirect:/findAll";
     }
 
 }
