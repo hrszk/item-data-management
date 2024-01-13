@@ -1,8 +1,16 @@
 package com.example.itemdatamanagement.form;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class InsertUserForm {
+
+    @NotBlank(message = "error:may not be empty")
     private String name;
+
+    @NotBlank(message = "error:may not be empty")
     private String mailAddress;
+
+    @NotBlank(message = "error:may not be empty")
     private String password;
 
     public String getName() {
