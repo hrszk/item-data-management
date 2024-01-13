@@ -34,6 +34,9 @@ public class ItemAndCategory {
     // 説明
     private String description;
 
+    // 論理削除
+    private boolean deleted;
+
     public Integer getId() {
         return id;
     }
@@ -136,6 +139,14 @@ public class ItemAndCategory {
                 + ", categoryName=" + categoryName + ", parentId=" + parentId + ", NameAll=" + NameAll + ", brand="
                 + brand + ", price=" + price + ", stock=" + stock + ", shipping=" + shipping + ", description="
                 + description + "]";
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 
 }

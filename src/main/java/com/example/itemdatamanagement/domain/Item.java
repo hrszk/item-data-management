@@ -28,6 +28,9 @@ public class Item {
     // 説明
     private String description;
 
+    // 論理削除
+    private boolean deleted;
+
     public Integer getId() {
         return id;
     }
@@ -105,5 +108,13 @@ public class Item {
         return "Item [id=" + id + ", name=" + name + ", condition=" + condition + ", category=" + category
                 + ", brand=" + brand + ", price=" + price + ", stock=" + stock + ", shipping=" + shipping
                 + ", description=" + description + "]";
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

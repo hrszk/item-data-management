@@ -33,6 +33,7 @@ public class ItemRepository {
         itemAndCategory.setStock(rs.getInt("stock"));
         itemAndCategory.setShipping(rs.getInt("shipping"));
         itemAndCategory.setDescription(rs.getString("description"));
+        itemAndCategory.setDeleted(rs.getBoolean("deleted"));
         return itemAndCategory;
     };
 
@@ -47,6 +48,7 @@ public class ItemRepository {
         item.setStock(rs.getInt("stock"));
         item.setShipping(rs.getInt("shipping"));
         item.setDescription(rs.getString("description"));
+        item.setDeleted(rs.getBoolean("deleted"));
         return item;
     };
 
@@ -64,7 +66,8 @@ public class ItemRepository {
                 	i.price,
                 	i.stock,
                 	i.shipping,
-                	i.description
+                	i.description,
+                    i.deleted
                 from items i
                 INNER join category c ON i.category=c.id
                 WHERE deleted=false
