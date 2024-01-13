@@ -4,6 +4,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +27,16 @@ public class UserController {
     private HttpSession session;
 
     @GetMapping("/toPageUserRegister")
-    public String toPageUserRegister() {
+    public String toPageUserRegister(InsertUserForm form, Model model) {
         return "user/register";
     }
 
     @PostMapping("/insertUser")
-    public String insertUser(InsertUserForm form) {
+    public String insertUser(@Validated InsertUserForm form, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "redirect:/toPageUserRegister";
+        }
+
         User user = new User();
         BeanUtils.copyProperties(form, user);
 
@@ -44,10 +50,10 @@ public class UserController {
     }
 
     @PostMapping("/userLogin")
-    public String userLogin(String mailAddress,String password,Model model) { 
-        User user = userService.findByMailAddressAndPassword(mailAddress,password);
+    public String userLogin(String mailAddress, String password, Model model) {
+        User user = userService.findByMailAddressAndPassword(mailAddress, password);
         if (user == null) {
-            model.addAttribute("error","error:failed to login");
+            model.addAttribute("error", "error:failed to login");
             return "user/login";
         } else {
             session.setAttribute("user", user);

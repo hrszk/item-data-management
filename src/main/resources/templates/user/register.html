@@ -31,25 +31,30 @@
         <div class="panel panel-default">
             <div class="panel-heading">Register Account</div>
             <div class="panel-body">
-                <form th:action="@{/insertUser}" method="post">
+                <form th:action="@{/insertUser}" method="post" th:object="${insertUserForm}">
                     <div class="form-group">
                         <label for="name">name</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" class="form-control" id="name" name="name" th:field="*{name}">
+                        <div th:error="*{name}" style="color: red;"></div>
                     </div>
                     <div class="form-group">
                         <label for="mailAddress">mail address</label>
-                        <input type="email" class="form-control" id="mailAddress" name="mailAddress">
+                        <input type="email" class="form-control" id="mailAddress" name="mailAddress"
+                            th:field="*{mailAddress}">
+                        <div th:error="*{mailAddress}" style="color: red;"></div>
                     </div>
                     <div class="form-group">
                         <label for="password">password</label>
-                        <input type="text" class="form-control" id="password" name="password">
+                        <input type="text" class="form-control" id="password" name="password" th:field="*{password}">
+                        <div th:error="*{password}" style="color: red;"></div>
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
             </div>
         </div>
         <div>
-            <a type="button" class="btn btn-default" href="./login.html"><i class="fa fa-reply"></i>&nbsp;Login page</a>
+            <a type="button" class="btn btn-default" th:href="@{/toPageUserLogin}"><i
+                    class="fa fa-reply"></i>&nbsp;Login page</a>
         </div>
 </body>
 
