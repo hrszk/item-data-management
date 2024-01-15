@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.itemdatamanagement.domain.Category;
+import com.example.itemdatamanagement.domain.Image;
 import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.service.CategoryService;
+import com.example.itemdatamanagement.service.ImageService;
 import com.example.itemdatamanagement.service.ItemService;
 
 @Controller
@@ -24,6 +26,9 @@ public class ItemController {
 
     @Autowired
     private ItemService itemService;
+
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping("/findAll")
     public String findAll(Model model) {
@@ -46,6 +51,14 @@ public class ItemController {
     public String showItemDetail(Integer id, Model model) {
         ItemAndCategory itemAndCategory = itemService.findById(id);
         model.addAttribute("itemAndCategory", itemAndCategory);
+
+        Image image = imageService.findByIdImage(id);
+
+        if (image == null) {
+            model.addAttribute("text", "no image");
+        } else {
+            model.addAttribute("image", image);
+        }
         return "item/detail";
     }
 

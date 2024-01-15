@@ -86,6 +86,17 @@
                             too scary. 9"" tall. No chips or cracks but minor paint loss in a
                             few places. Clown Circus Doll Collectible</td>
                     </tr>
+                    <tr>
+                        <th>image</th>
+                        <td>
+                            <div th:if="${text!=null}">
+                                <span th:text="${text}"></span>
+                            </div>
+                            <div th:unless="${text!=null}">
+                                <img th:src="@{/item_image/}+ ${image.imagePath}" height="130px">
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <a type="button" class="btn btn-default" th:href="@{'/toPageUpdateItem?id='+${itemAndCategory.id}}"><i
