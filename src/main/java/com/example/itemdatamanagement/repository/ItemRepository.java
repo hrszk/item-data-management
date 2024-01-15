@@ -52,6 +52,11 @@ public class ItemRepository {
         return item;
     };
 
+    /**
+     * itemとcategory全件検索
+     * 
+     * @return itemとcategory全件
+     */
     public List<ItemAndCategory> findAll() {
         String findAllSql = """
                 SELECT
@@ -80,6 +85,12 @@ public class ItemRepository {
         return itemAndCategoryList;
     }
 
+    /**
+     * 名前からitemとcategory検索
+     * 
+     * @param name
+     * @return 対象のitemとcategory全件
+     */
     public List<ItemAndCategory> findByName(String name) {
         String findByNameSql = """
                 SELECT
@@ -104,6 +115,12 @@ public class ItemRepository {
         return itemAndCategoryList;
     }
 
+    /**
+     * idでitemとcategoryの検索
+     * 
+     * @param id
+     * @return itemとcategory
+     */
     public ItemAndCategory findById(Integer id) {
         String findByIdSql = """
                 SELECT
@@ -128,6 +145,11 @@ public class ItemRepository {
         return itemAndCategory;
     }
 
+    /**
+     * itemの削除
+     * 
+     * @param id
+     */
     public void deleteItem(Integer id) {
         String deleteItemSql = "UPDATE items SET deleted=true WHERE id=:id;";
 
@@ -135,6 +157,12 @@ public class ItemRepository {
         template.update(deleteItemSql, param);
     }
 
+    /**
+     * idでitemを検索
+     * 
+     * @param id
+     * @return item
+     */
     public Item findByIdItem(Integer id) {
         String sql = "SELECT * FROM items WHERE id=:id;";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
@@ -142,11 +170,26 @@ public class ItemRepository {
         return item;
     }
 
+    /**
+     * itemデータの更新
+     * 
+     * @param item
+     */
     public void updeteItem(Item item) {
         String sql = """
                 UPDATE items SET name=:name,price=:price,category=:category,brand=:brand,condition=:condition,description=:description
                 WHERE id=:id;
                 """;
+        SqlParameterSource param = new BeanPropertySqlParameterSource(item);
+        template.update(sql, param);
+    }
+
+    public void insertItem(Item item) {
+        String sql = """
+                INSERT INTO items(name,condition,category,brand,price,shipping,description)
+                values(:name,:condition,:category,:brand,:price,:shipping,:description);
+                    """;
+
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);
         template.update(sql, param);
     }
