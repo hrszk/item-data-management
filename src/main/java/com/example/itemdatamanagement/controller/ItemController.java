@@ -69,9 +69,9 @@ public class ItemController {
 
     @PostMapping("/deleteItem")
     public String deleteItem(Integer id) {
-        Item item = itemService.findByIdItem(id);
-        Integer categoryId = item.getCategory();
-        categoryService.deleteCategory(categoryId);
+        // Item item = itemService.findByIdItem(id);
+        // Integer categoryId = item.getCategory();
+        // categoryService.deleteCategory(categoryId);
         itemService.deleteItem(id);
         return "redirect:/findAll";
     }
