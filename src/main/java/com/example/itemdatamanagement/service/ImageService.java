@@ -15,4 +15,8 @@ public class ImageService {
     public void insertImage(Image image) {
         imageRepository.insertImage(image);
     }
+
+    public Image findByIdImage(Integer id) {
+        return imageRepository.findByIdImage(id);
+    }
 }

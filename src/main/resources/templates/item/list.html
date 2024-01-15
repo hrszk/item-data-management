@@ -136,7 +136,7 @@
                                 <!-- <a href="">Electronics</a> / <a href="">Computers &amp; Tablets</a> /
                                     <a href="">Components
                                         &amp; Parts</a> -->
-                                <span th:text="${#strings.arrayJoin(item.nameAll.split('/'), ' / ')}"></span>
+                                <span th:text="${item.nameAll}"></span>
                             </td>
                             <td class="item-brand"><a href="">
                                     <span th:text="${item.brand}">

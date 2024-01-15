@@ -76,7 +76,7 @@ public class ItemRepository {
                 from items i
                 INNER join category c ON i.category=c.id
                 WHERE deleted=false
-                ORDER by i_id
+                ORDER by i_id DESC
                 LIMIT 30;
                                 """;
         ;
@@ -135,7 +135,8 @@ public class ItemRepository {
                     i.price,
                     i.stock,
                     i.shipping,
-                    i.description
+                    i.description,
+                    i.deleted
                     from items i
                 INNER join category c ON i.category=c.id
                 WHERE i.id=:id;
