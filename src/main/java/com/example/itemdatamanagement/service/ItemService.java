@@ -42,4 +42,8 @@ public class ItemService {
     public void insertItem(Item item) {
         itemRepository.insertItem(item);
     }
+
+    public Item findByNewItem() {
+        return itemRepository.findByNewItem();
+    }
 }

@@ -193,4 +193,13 @@ public class ItemRepository {
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);
         template.update(sql, param);
     }
+
+    public Item findByNewItem() {
+        String sql = """
+                SELECT * FROM items ORDER by id DESC LIMIT 1;
+                    """;
+
+        List<Item> items = template.query(sql, ITEM_ROW_MAPPER);
+        return items.isEmpty() ? null : items.get(0);
+    }
 }
