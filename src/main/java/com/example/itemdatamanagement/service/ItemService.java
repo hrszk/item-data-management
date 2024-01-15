@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.repository.ItemRepository;
@@ -40,4 +39,7 @@ public class ItemService {
         itemRepository.updeteItem(item);
     }
 
+    public void insertItem(Item item) {
+        itemRepository.insertItem(item);
+    }
 }

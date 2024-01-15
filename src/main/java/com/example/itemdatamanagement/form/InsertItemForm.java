@@ -7,10 +7,10 @@ public class InsertItemForm {
     private String parentCategory;
     private String childCategory;
     private String grandChild;
-    private String brandName;
-    private Integer itemConditionId;
+    private String brand;
+    private Integer condition;
     private Integer shipping;
-    private String itemDescription;
+    private String description;
 
     public String getName() {
         return name;
@@ -52,44 +52,43 @@ public class InsertItemForm {
         this.grandChild = grandChild;
     }
 
-    public String getBrandName() {
-        return brandName;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public Integer getItemConditionId() {
-        return itemConditionId;
+    public Integer getCondition() {
+        return condition;
     }
 
-    public void setItemConditionId(Integer itemConditionId) {
-        this.itemConditionId = itemConditionId;
+    public void setCondition(Integer condition) {
+        this.condition = condition;
     }
 
-    public Integer getShopping() {
+    public Integer getShipping() {
         return shipping;
     }
 
-    public void setShopping(Integer shipping) {
+    public void setShipping(Integer shipping) {
         this.shipping = shipping;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "AddItemForm [name=" + name + ", price=" + price + ", parentCategory="
-                + parentCategory + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brandName="
-                + brandName + ", itemConditionId=" + itemConditionId + ", shipping=" + shipping + ", itemDescription="
-                + itemDescription + "]";
+        return "InsertItemForm [name=" + name + ", price=" + price + ", parentCategory=" + parentCategory
+                + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brand=" + brand
+                + ", condition=" + condition + ", shipping=" + shipping + ", description=" + description + "]";
     }
 
 }
