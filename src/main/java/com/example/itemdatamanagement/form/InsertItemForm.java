@@ -1,5 +1,7 @@
 package com.example.itemdatamanagement.form;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class InsertItemForm {
 
     private String name;
@@ -11,6 +13,7 @@ public class InsertItemForm {
     private Integer condition;
     private Integer shipping;
     private String description;
+    private MultipartFile image;
 
     public String getName() {
         return name;
@@ -84,11 +87,20 @@ public class InsertItemForm {
         this.description = description;
     }
 
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "InsertItemForm [name=" + name + ", price=" + price + ", parentCategory=" + parentCategory
                 + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brand=" + brand
-                + ", condition=" + condition + ", shipping=" + shipping + ", description=" + description + "]";
+                + ", condition=" + condition + ", shipping=" + shipping + ", description=" + description + ", image="
+                + image + "]";
     }
 
 }

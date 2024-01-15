@@ -50,7 +50,7 @@
         <h2>Add</h2>
 
         <!-- add form -->
-        <form th:action="@{/addItem}" method="post" class="form-horizontal">
+        <form th:action="@{/addItem}" method="post" class="form-horizontal" enctype="multipart/form-data">
             <!-- name -->
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">name</label>
@@ -135,6 +135,14 @@
                 <label for="description" class="col-sm-2 control-label">description</label>
                 <div class="col-sm-8">
                     <textarea id="description" class="form-control" rows="5" name="description"></textarea>
+                    <span class="text-danger">error:may not be empty</span>
+                </div>
+            </div>
+            <!-- image -->
+            <div class="form-group">
+                <label for="image" class="col-sm-2 control-label">image</label>
+                <div class="col-sm-8">
+                    <input type="file" name="image">
                     <span class="text-danger">error:may not be empty</span>
                 </div>
             </div>
