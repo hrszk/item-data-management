@@ -1,15 +1,18 @@
 package com.example.itemdatamanagement.form;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UpdateItemForm {
+    private Integer id;
     private String name;
     private double price;
     private String parentCategory;
     private String childCategory;
     private String grandChild;
-    private String brandName;
-    private Integer itemConditionId;
-    private Integer shipping;
-    private String itemDescription;
+    private String brand;
+    private Integer condition;
+    private String description;
+    private MultipartFile image;
 
     public String getName() {
         return name;
@@ -51,44 +54,51 @@ public class UpdateItemForm {
         this.grandChild = grandChild;
     }
 
-    public String getBrandName() {
-        return brandName;
+    public Integer getId() {
+        return id;
     }
 
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getItemConditionId() {
-        return itemConditionId;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setItemConditionId(Integer itemConditionId) {
-        this.itemConditionId = itemConditionId;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public Integer getShipping() {
-        return shipping;
+    public Integer getCondition() {
+        return condition;
     }
 
-    public void setShipping(Integer shipping) {
-        this.shipping = shipping;
+    public void setCondition(Integer condition) {
+        this.condition = condition;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public MultipartFile getImage() {
+        return image;
+    }
+
+    public void setImage(MultipartFile image) {
+        this.image = image;
     }
 
     @Override
     public String toString() {
-        return "UpdateItemForm [name=" + name + ", price=" + price + ", parentCategory=" + parentCategory
-                + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brandName=" + brandName
-                + ", itemConditionId=" + itemConditionId + ", shipping=" + shipping + ", itemDescription="
-                + itemDescription + "]";
+        return "UpdateItemForm [id=" + id + ", name=" + name + ", price=" + price + ", parentCategory=" + parentCategory
+                + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brand=" + brand
+                + ", condition=" + condition + ", description=" + description + ", image=" + image + "]";
     }
 
 }

@@ -40,20 +40,6 @@ public class InsertItemController {
     @PostMapping("/addItem")
     public String addItem(InsertItemForm form, Model model) throws IOException {
 
-        long fileSize = form.getImage().getSize();
-
-        // if (fileSize == 0) {
-        // model.addAttribute("errorMessage", "画像を選択してください");
-        // return "insert/item_insert";
-        // }
-
-        // 保存する画像ファイルのパス設定
-        String saveFileName = form.getName() + "." + ImgExtract;
-        Path imgFilePath = Path.of(imageFolder, saveFileName);
-
-        // 画像ファイルを保存
-        Files.copy(form.getImage().getInputStream(), imgFilePath);
-
         Item item = new Item();
         BeanUtils.copyProperties(form, item);
         item.setCategory(1410);
@@ -61,6 +47,13 @@ public class InsertItemController {
         itemService.insertItem(item);
 
         Item item2 = itemService.findByNewItem();
+
+        // 保存する画像ファイルのパス設定
+        String saveFileName = item2.getId() + "." + ImgExtract;
+        Path imgFilePath = Path.of(imageFolder, saveFileName);
+
+        // 画像ファイルを保存
+        Files.copy(form.getImage().getInputStream(), imgFilePath);
 
         Image image = new Image();
         image.setItemId(item2.getId());
