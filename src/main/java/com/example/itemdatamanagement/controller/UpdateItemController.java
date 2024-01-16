@@ -51,28 +51,31 @@ public class UpdateItemController {
         item.setCategory(item2.getCategory());
         itemService.updateItem(item);
 
-        Image image = imageService.findByIdImage(item.getId());
-        if (image == null) {
-            // 保存する画像ファイルのパス設定
-            String saveFileName = item.getId() + "." + ImgExtract;
-            Path imgFilePath = Path.of(imageFolder, saveFileName);
+        if (form.getImage().getSize() != 0) {
 
-            // 画像ファイルを保存
-            Files.copy(form.getImage().getInputStream(), imgFilePath);
+            Image image = imageService.findByIdImage(item.getId());
+            if (image == null) {
+                // 保存する画像ファイルのパス設定
+                String saveFileName = item.getId() + "." + ImgExtract;
+                Path imgFilePath = Path.of(imageFolder, saveFileName);
 
-            Image image2 = new Image();
-            image2.setItemId(item.getId());
-            image2.setImagePath(saveFileName);
-            imageService.insertImage(image2);
+                // 画像ファイルを保存
+                Files.copy(form.getImage().getInputStream(), imgFilePath);
 
-        } else {
-            Path p = Paths.get(imageFolder + image.getImagePath());
-            Files.delete(p);
+                Image image2 = new Image();
+                image2.setItemId(item.getId());
+                image2.setImagePath(saveFileName);
+                imageService.insertImage(image2);
 
-            String saveFileName = item.getId() + "." + ImgExtract;
-            Path imgFilePath = Path.of(imageFolder, saveFileName);
+            } else {
+                Path p = Paths.get(imageFolder + image.getImagePath());
+                Files.delete(p);
 
-            Files.copy(form.getImage().getInputStream(), imgFilePath);
+                String saveFileName = item.getId() + "." + ImgExtract;
+                Path imgFilePath = Path.of(imageFolder, saveFileName);
+
+                Files.copy(form.getImage().getInputStream(), imgFilePath);
+            }
         }
         return "redirect:/findAll";
     }

@@ -37,6 +37,12 @@ public class ItemController {
 
         List<Category> parentCategoryList = categoryService.findAllParentCategory();
         model.addAttribute("parentCategoryList", parentCategoryList);
+
+        List<Category> childCategoryList = categoryService.findAllChildCategory();
+        model.addAttribute("childCategoryList", childCategoryList);
+
+        List<Category> grandChildList = categoryService.findAllGrandChild();
+        model.addAttribute("grandChildList", grandChildList);
         return "item/list";
     }
 

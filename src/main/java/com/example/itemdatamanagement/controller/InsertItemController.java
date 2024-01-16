@@ -46,20 +46,23 @@ public class InsertItemController {
         item.setShipping(0);
         itemService.insertItem(item);
 
-        Item item2 = itemService.findByNewItem();
+        if (form.getImage().getSize() != 0) {
 
-        // 保存する画像ファイルのパス設定
-        String saveFileName = item2.getId() + "." + ImgExtract;
-        Path imgFilePath = Path.of(imageFolder, saveFileName);
+            Item item2 = itemService.findByNewItem();
 
-        // 画像ファイルを保存
-        Files.copy(form.getImage().getInputStream(), imgFilePath);
+            // 保存する画像ファイルのパス設定
+            String saveFileName = item2.getId() + "." + ImgExtract;
+            Path imgFilePath = Path.of(imageFolder, saveFileName);
 
-        Image image = new Image();
-        image.setItemId(item2.getId());
-        image.setImagePath(saveFileName);
-        imageService.insertImage(image);
+            // 画像ファイルを保存
+            Files.copy(form.getImage().getInputStream(), imgFilePath);
 
+            Image image = new Image();
+            image.setItemId(item2.getId());
+            image.setImagePath(saveFileName);
+            imageService.insertImage(image);
+
+        }
         return "redirect:/findAll";
     }
 }

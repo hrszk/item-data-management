@@ -52,40 +52,40 @@
 
         <!-- 検索フォーム -->
         <div id="forms">
-            <form th:action="@{/findByName}" class="form-inline" role="form" method="get">
+            <form th:action="@{/searchItem}" class="form-inline" role="form" method="post">
                 <div class="form-group">
-                    <input type="input" class="form-control" id="name" placeholder="item name" th:value="${name}" />
+                    <input type="input" class="form-control" id="name" placeholder="item name" name="name" />
                 </div>
                 <div class="form-group"><i class="fa fa-plus"></i></div>
                 <div class="form-group">
-                    <select class="form-control">
-                        <option>- parentCategory -</option>
+                    <select class="form-control" name="parentCategory">
+                        <option value="">- parentCategory -</option>
                         <option th:each="parentCategory : ${parentCategoryList}">
                             <span th:text="${parentCategory.name}" th:value="${parentCategory.name}">
                                 parentCategory1
                             </span>
                         </option>
                     </select>
-                    <select class="form-control">
-                        <option>- childCategory -</option>
-                        <option>childCategory1</option>
-                        <option>childCategory2</option>
-                        <option>childCategory3</option>
-                        <option>childCategory4</option>
-                        <option>childCategory5</option>
+                    <select class="form-control" name="childCategory">
+                        <option value="">- childCategory -</option>
+                        <option th:each="childCategory : ${childCategoryList}">
+                            <span th:text="${childCategory.name}" th:value="${childCategory.name}">
+                                childCategory1
+                            </span>
+                        </option>
                     </select>
-                    <select class="form-control">
-                        <option>- grandChild -</option>
-                        <option>grandChild1</option>
-                        <option>grandChild2</option>
-                        <option>grandChild3</option>
-                        <option>grandChild4</option>
-                        <option>grandChild5</option>
+                    <select class="form-control" name="grandChild">
+                        <option value="">- grandChild -</option>
+                        <option th:each="grandChild : ${grandChildList}">
+                            <span th:text="${grandChild.name}" th:value="${grandChild.name}">
+                                grandChild1
+                            </span>
+                        </option>
                     </select>
                 </div>
                 <div class="form-group"><i class="fa fa-plus"></i></div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="brand" />
+                    <input type="text" class="form-control" placeholder="brand" name="brand" />
                 </div>
                 <div class="form-group"></div>
                 <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> search</button>
