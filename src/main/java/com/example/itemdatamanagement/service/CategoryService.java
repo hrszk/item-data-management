@@ -18,7 +18,19 @@ public class CategoryService {
         return categoryRepository.findAllParentCategory();
     }
 
+    public List<Category> findAllChildCategory() {
+        return categoryRepository.findAllChildCategory();
+    }
+
+    public List<Category> findAllGrandChild() {
+        return categoryRepository.findAllGrandChild();
+    }
+
     public void deleteCategory(Integer id) {
         categoryRepository.deleteCategory(id);
+    }
+
+    public List<Category> findByNameCategory(String nameAll) {
+        return categoryRepository.findByNameCategory(nameAll);
     }
 }

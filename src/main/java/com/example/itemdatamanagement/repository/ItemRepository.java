@@ -108,9 +108,9 @@ public class ItemRepository {
                                     i.description
                                 from items i
                                 INNER join category c ON i.category=c.id
-                    WHERE i.name LIKE '%:name%';
+                    WHERE i.name LIKE ':name';
                     """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
         List<ItemAndCategory> itemAndCategoryList = template.query(findByNameSql, param, ITEMANDCATEGORY_ROW_MAPPER);
         return itemAndCategoryList;
     }
