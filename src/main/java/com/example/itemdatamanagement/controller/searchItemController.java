@@ -16,7 +16,7 @@ import com.example.itemdatamanagement.service.ItemAndCategoryService;
 
 @Controller
 @RequestMapping({ "", "/" })
-public class searchItemController {
+public class SearchItemController {
 
     @Autowired
     private ItemAndCategoryService itemAndCategoryService;
@@ -38,7 +38,7 @@ public class searchItemController {
                 && form.getGrandChild().isEmpty()) {
             nameAll = form.getParentCategory();
         } else {
-            nameAll = null;
+            nameAll = "%";
         }
 
         // if (form.getName() != null && nameAll != null && form.getBrand() != null) {
