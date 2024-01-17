@@ -73,7 +73,9 @@
                 <div class="col-sm-8">
                     <select class="form-control" name="parentCategory">
                         <option value="">-- parentCategory --</option>
-                        <option>parentCategory1</option>
+                        <div th:each="parentCategory:${parentCategoryList}">
+                            <option th:text="${parentCategory.name}"></option>
+                        </div>
                     </select>
                 </div>
             </div>
@@ -82,7 +84,9 @@
                 <div class="col-sm-8">
                     <select class="form-control" name="childCategory">
                         <option value="">-- childCategory --</option>
-                        <option>childCategory1</option>
+                        <div th:each="childCategory:${childCategoryList}">
+                            <option th:text="${childCategory.name}"></option>
+                        </div>
                     </select>
                 </div>
             </div>
@@ -91,7 +95,9 @@
                 <div class="col-sm-8">
                     <select class="form-control" name="grandChild">
                         <option value="">-- grandChild --</option>
-                        <option>grandChild1</option>
+                        <div th:each="grandChild:${grandChildList}">
+                            <option th:text="${grandChild.name}"></option>
+                        </div>
                     </select>
                 </div>
             </div>
