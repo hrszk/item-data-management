@@ -63,14 +63,14 @@ public class CategoryRepository {
         template.update(sql, param);
     }
 
-    public List<Category> findByNameCategory(String nameAll) {
+    public Category findByNameCategory(String nameAll) {
         String sql = """
                 SELECT * FROM category WHERE name_all=:nameAll
                     """;
 
-        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll);
         List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
-        return categoryList;
+        return categoryList.isEmpty() ? null : categoryList.get(0);
 
     }
 

@@ -30,7 +30,7 @@ public class CategoryService {
         categoryRepository.deleteCategory(id);
     }
 
-    public List<Category> findByNameCategory(String nameAll) {
+    public Category findByNameCategory(String nameAll) {
         return categoryRepository.findByNameCategory(nameAll);
     }
 }
