@@ -37,4 +37,8 @@ public class CategoryService {
     public Category findByIdCategory(Integer id) {
         return categoryRepository.findByIdCategory(id);
     }
+
+    public List<Category> findByParentCategory(String nameAll) {
+        return categoryRepository.findByParentCategory(nameAll);
+    }
 }
