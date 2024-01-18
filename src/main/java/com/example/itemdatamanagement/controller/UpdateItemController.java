@@ -1,5 +1,7 @@
 package com.example.itemdatamanagement.controller;
 
+import java.util.List;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.Image;
 import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.form.UpdateItemForm;
+import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ImageService;
 import com.example.itemdatamanagement.service.ItemService;
 
@@ -29,6 +33,9 @@ public class UpdateItemController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     private String imageFolder = "src/main/resources/static/item_image/";
     private String ImgExtract = "jpg";
 
@@ -36,8 +43,24 @@ public class UpdateItemController {
     public String toPageUpdateItem(Integer id, Model model) {
         Item item = itemService.findByIdItem(id);
         model.addAttribute("item", item);
+
         Image image = imageService.findByIdImage(id);
         model.addAttribute("image", image);
+
+        if (item.getCategory() != 1410) {
+            Category category = categoryService.findByIdCategory(item.getCategory());
+            String[] categories = category.getNameAll().split("/");
+            model.addAttribute("categories", categories);
+        }
+
+        List<Category> parentCategoryList = categoryService.findAllParentCategory();
+        model.addAttribute("parentCategoryList", parentCategoryList);
+
+        List<Category> childCategoryList = categoryService.findAllChildCategory();
+        model.addAttribute("childCategoryList", childCategoryList);
+
+        List<Category> grandChildList = categoryService.findAllGrandChild();
+        model.addAttribute("grandChildList", grandChildList);
         return "item/edit";
     }
 
@@ -47,8 +70,28 @@ public class UpdateItemController {
         Item item = new Item();
         BeanUtils.copyProperties(form, item);
 
-        Item item2 = itemService.findByIdItem(item.getId());
-        item.setCategory(item2.getCategory());
+        String nameAll;
+        if (!form.getParentCategory().isEmpty() && !form.getChildCategory().isEmpty()
+                && !form.getGrandChild().isEmpty()) {
+            nameAll = form.getParentCategory() + "/" + form.getChildCategory() + "/" + form.getGrandChild();
+        } else if (!form.getParentCategory().isEmpty() && !form.getChildCategory().isEmpty()
+                && form.getGrandChild().isEmpty()) {
+            nameAll = form.getParentCategory() + "/" + form.getChildCategory();
+        } else if (!form.getParentCategory().isEmpty() && form.getChildCategory().isEmpty()
+                && form.getGrandChild().isEmpty()) {
+            nameAll = form.getParentCategory();
+        } else {
+            nameAll = "";
+        }
+
+        if ("".equals(nameAll)) {
+            Item item2 = itemService.findByIdItem(item.getId());
+            item.setCategory(item2.getCategory());
+        } else {
+            Category category = categoryService.findByNameCategory(nameAll);
+            item.setCategory(category.getId());
+        }
+
         itemService.updateItem(item);
 
         if (form.getImage().getSize() != 0) {

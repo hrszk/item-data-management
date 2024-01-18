@@ -71,39 +71,48 @@
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label">category</label>
                 <div class="col-sm-8">
-                    <select class="form-control">
-                        <option>- parentCategory -</option>
-                        <option>parentCategory1</option>
-                        <option>parentCategory2</option>
-                        <option>parentCategory3</option>
-                        <option>parentCategory4</option>
-                        <option>parentCategory5</option>
+                    <select class="form-control" name="parentCategory">
+                        <div th:if="${categories!=null}">
+                            <option th:text="${categories[0]}">-parentCategory -</option>
+                        </div>
+                        <div th:unless="${categories!=null}">
+                            <option value="">-parentCategory -</option>
+                        </div>
+                        <div th:each="parentCategory : ${parentCategoryList}">
+                            <option th:text="${parentCategory.name}">parentCategory1</option>
+                        </div>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control">
-                        <option>- childCategory -</option>
-                        <option>childCategory1</option>
-                        <option>childCategory2</option>
-                        <option>childCategory3</option>
-                        <option>childCategory4</option>
-                        <option>childCategory5</option>
+                    <select class="form-control" name="childCategory">
+                        <div th:if="${categories!=null}">
+                            <option th:text="${categories[1]}">- childCategory -</option>
+                        </div>
+                        <div th:unless="${categories!=null}">
+                            <option value="">- childCategory -</option>
+                        </div>
+                        <div th:each="childCategory : ${childCategoryList}">
+                            <option th:text="${childCategory.name}">childCategory1</option>
+                        </div>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="category" class="col-sm-2 control-label"></label>
                 <div class="col-sm-8">
-                    <select class="form-control">
-                        <option>- grandChild -</option>
-                        <option>grandChild1</option>
-                        <option>grandChild2</option>
-                        <option>grandChild3</option>
-                        <option>grandChild4</option>
-                        <option>grandChild5</option>
+                    <select class="form-control" name="grandChild">
+                        <div th:if="${categories!=null}">
+                            <option th:text="${categories[2]}">- grandChild -</option>
+                        </div>
+                        <div th:unless="${categories!=null}">
+                            <option value="">- grandChild -</option>
+                        </div>
+                        <div th:each="grandChild : ${grandChildList}">
+                            <option th:text="${grandChild.name}">grandChild1</option>
+                        </div>
                     </select>
                 </div>
             </div>
