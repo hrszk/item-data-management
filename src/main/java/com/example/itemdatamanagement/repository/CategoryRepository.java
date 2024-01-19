@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -28,7 +29,8 @@ public class CategoryRepository {
 
     public List<Category> findAllParentCategory() {
         String findAllParentCategorySql = """
-                SELECT * FROM category WHERE parent_id IS NULL AND name IS NOT NULL;
+                SELECT * FROM category WHERE parent_id IS NULL AND name IS NOT NULL
+                ORDER BY name;
                     """;
 
         List<Category> parentCategoryList = template.query(findAllParentCategorySql, CATEGORY_ROW_MAPPER);
@@ -99,6 +101,24 @@ public class CategoryRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("parentCategory", parentCategory + "%");
         List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
         return categoryList;
+    }
+
+    public void insertParentCategory(String name) {
+        String Sql = """
+                INSERT INTO category(name) VALUES(:name);
+                """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+        template.update(Sql, param);
+    }
+
+    public void insertChildCategory(Category category) {
+        String Sql = """
+                INSERT INTO category(name,parent_id,name_all) VALUES(:name,:parentId,:nameAll);
+                """;
+
+        SqlParameterSource param = new BeanPropertySqlParameterSource(category);
+        template.update(Sql, param);
     }
 
 }
