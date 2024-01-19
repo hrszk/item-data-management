@@ -37,8 +37,12 @@ public class CategoryRepository {
 
     public List<Category> findAllChildCategory() {
         String findAllParentCategorySql = """
-                SELECT * FROM category WHERE parent_id=1 AND name_all IS NULL;
-                    """;
+                SELECT  MIN(id) AS id,name,1 AS parent_id,MIN(name_all) AS name_all
+                FROM category
+                WHERE parent_id=1
+                GROUP by name
+                order by name;
+                        """;
 
         List<Category> parentCategoryList = template.query(findAllParentCategorySql, CATEGORY_ROW_MAPPER);
         return parentCategoryList;

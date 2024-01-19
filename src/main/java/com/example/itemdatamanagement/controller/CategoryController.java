@@ -22,11 +22,8 @@ public class CategoryController {
         List<Category> parentCategoryList = categoryService.findAllParentCategory();
         model.addAttribute("parentCategoryList", parentCategoryList);
 
-        for (Category category : parentCategoryList) {
-            String p = category.getName();
-            List<Category> categoryList = categoryService.findByParentCategory(p);
-            model.addAttribute(p, categoryList);
-        }
+        List<Category> childCategoryList = categoryService.findAllChildCategory();
+        model.addAttribute("childCategoryList", childCategoryList);
 
         return "category/list";
     }

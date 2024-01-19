@@ -61,10 +61,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="childCategory : ${parentCategory.name}">
-                        <td class="item-name" th:text="${childCategory}">
-                            Razer BlackWidowChroma Keyboard
-                        </td>
+                    <tr th:each="childCategory : ${childCategoryList}">
+                        <div th:if="${parentCategory.name}==${#strings.substringBefore(childCategory.nameAll, '/')}">
+                            <td class="item-name" th:text="${childCategory.name}">
+                                Razer BlackWidowChroma Keyboard
+                            </td>
+                        </div>
                     </tr>
                 </tbody>
             </table>
