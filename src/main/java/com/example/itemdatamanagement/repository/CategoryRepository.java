@@ -28,7 +28,7 @@ public class CategoryRepository {
 
     public List<Category> findAllParentCategory() {
         String findAllParentCategorySql = """
-                SELECT * FROM category WHERE parent_id IS NULL AND name_all IS NULL;
+                SELECT * FROM category WHERE parent_id IS NULL AND name IS NOT NULL;
                     """;
 
         List<Category> parentCategoryList = template.query(findAllParentCategorySql, CATEGORY_ROW_MAPPER);
@@ -37,8 +37,12 @@ public class CategoryRepository {
 
     public List<Category> findAllChildCategory() {
         String findAllParentCategorySql = """
-                SELECT * FROM category WHERE parent_id=1 AND name_all IS NULL;
-                    """;
+                SELECT  MIN(id) AS id,name,1 AS parent_id,MIN(name_all) AS name_all
+                FROM category
+                WHERE parent_id=1
+                GROUP by name
+                order by name;
+                        """;
 
         List<Category> parentCategoryList = template.query(findAllParentCategorySql, CATEGORY_ROW_MAPPER);
         return parentCategoryList;
@@ -81,6 +85,20 @@ public class CategoryRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         Category category = template.queryForObject(sql, param, CATEGORY_ROW_MAPPER);
         return category;
+    }
+
+    public List<Category> findByParentCategory(String parentCategory) {
+        String sql = """
+                SELECT  MIN(id) AS id,name,2 AS parent_id,MIN(name_all) AS name_all
+                FROM category
+                WHERE parent_id=2 AND name_all LIKE :parentCategory
+                GROUP by name
+                order by name;
+                    """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("parentCategory", parentCategory + "%");
+        List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
+        return categoryList;
     }
 
 }
