@@ -41,4 +41,12 @@ public class CategoryService {
     public List<Category> findByParentCategory(String nameAll) {
         return categoryRepository.findByParentCategory(nameAll);
     }
+
+    public void insertParentCategory(String name) {
+        categoryRepository.insertParentCategory(name);
+    }
+
+    public void insertChildCategory(Category category) {
+        categoryRepository.insertChildCategory(category);
+    }
 }
