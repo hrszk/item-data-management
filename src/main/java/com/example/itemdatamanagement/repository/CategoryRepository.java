@@ -121,4 +121,13 @@ public class CategoryRepository {
         template.update(Sql, param);
     }
 
+    public void updateChildCategory(String name, String nameAll, Integer id) {
+        String sql = """
+                UPDATE category SET name=:name,name_All=:nameAll WHERE id=:id;
+                    """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", name).addValue("nameAll", nameAll)
+                .addValue("id", id);
+        template.update(sql, param);
+    }
 }
