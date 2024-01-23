@@ -52,16 +52,17 @@
 
         <!-- 検索フォーム -->
         <div id="forms">
-            <form th:action="@{/searchItem}" class="form-inline" role="form" method="post">
+            <form th:action="@{/findAll}" class="form-inline" role="form" method="post">
                 <div class="form-group">
-                    <input type="input" class="form-control" id="name" placeholder="item name" name="name" />
+                    <input type="input" class="form-control" id="name" placeholder="item name" name="name"
+                        th:value="${form.name}" />
                 </div>
                 <div class="form-group"><i class="fa fa-plus"></i></div>
                 <div class="form-group">
                     <select class="form-control" name="parentCategory">
                         <option value="">- parentCategory -</option>
                         <option th:each="parentCategory : ${parentCategoryList}">
-                            <span th:text="${parentCategory.name}" th:value="${parentCategory.name}">
+                            <span th:text="${parentCategory.name}" th:value="${form.parentCategory}">
                                 parentCategory1
                             </span>
                         </option>
@@ -69,7 +70,7 @@
                     <select class="form-control" name="childCategory">
                         <option value="">- childCategory -</option>
                         <option th:each="childCategory : ${childCategoryList}">
-                            <span th:text="${childCategory.name}" th:value="${childCategory.name}">
+                            <span th:text="${childCategory.name}" th:value="${form.childCategory}">
                                 childCategory1
                             </span>
                         </option>
@@ -77,7 +78,7 @@
                     <select class="form-control" name="grandChild">
                         <option value="">- grandChild -</option>
                         <option th:each="grandChild : ${grandChildList}">
-                            <span th:text="${grandChild.name}" th:value="${grandChild.name}">
+                            <span th:text="${grandChild.name}" th:value="${form.grandChild}">
                                 grandChild1
                             </span>
                         </option>
@@ -85,7 +86,7 @@
                 </div>
                 <div class="form-group"><i class="fa fa-plus"></i></div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="brand" name="brand" />
+                    <input type="text" class="form-control" placeholder="brand" name="brand" th:value="${form.brand}" />
                 </div>
                 <div class="form-group"></div>
                 <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> search</button>
@@ -96,8 +97,17 @@
         <div class="pages">
             <nav class="page-nav">
                 <ul class="pager">
-                    <li class="previous"><a href="#">&larr; prev</a></li>
-                    <li class="next"><a href="#">next &rarr;</a></li>
+                    <li class="previous">
+                        <span th:if="${page == 1}">&larr; prev</span>
+                        <a th:unless="${page == 1}" th:href="@{/findAll(page = ${page}-1,name = ${form.name})}">&larr;
+                            prev</a>
+                    </li>
+                    <li class="next">
+                        <span th:if="${page} == ${totalPages}">next &rarr;</span>
+                        <a th:unless="${page} == ${totalPages}"
+                            th:href="@{/findAll(page = ${page} + 1 , name = ${form.name})}">next
+                            &rarr;</a>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -121,7 +131,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="item : ${itemAndCategoryList}">
+                    <tr th:each="item : ${itemPage}">
                         <form th:action="@{/deleteItem}" method="post">
                             <input type="hidden" name="id" th:value="${item.id}">
                             <td class="item-name">
@@ -133,9 +143,6 @@
                             </td>
                             <td class="item-price" th:text="${item.price}">52.0</td>
                             <td class="item-category">
-                                <!-- <a href="">Electronics</a> / <a href="">Computers &amp; Tablets</a> /
-                                    <a href="">Components
-                                        &amp; Parts</a> -->
                                 <span th:text="${item.nameAll}"></span>
                             </td>
                             <td class="item-brand"><a href="">
@@ -161,17 +168,23 @@
         <div class="pages">
             <nav class="page-nav">
                 <ul class="pager">
-                    <li class="previous"><a href="#">&larr; prev</a></li>
-                    <li class="next"><a href="#">next &rarr;</a></li>
+                    <li class="previous">
+                        <span th:if="${page == 1}">&larr; prev</span>
+                        <a th:unless="${page == 1}" th:href="@{/findAll(page = ${page} - 1)}">&larr; prev</a>
+                    </li>
+                    <li class="next">
+                        <span th:if="${page == 20}">next &rarr;</span>
+                        <a th:unless="${page == 20}" th:href="@{/findAll(page = ${page} + 1)}">next &rarr;</a>
+                    </li>
                 </ul>
             </nav>
             <!-- ページ番号を指定して表示するフォーム -->
             <div id="select-page">
-                <form class="form-inline">
+                <form class="form-inline" th:action="@{/findAll}" method="post">
                     <div class="form-group">
                         <div class="input-group col-xs-6">
                             <label></label>
-                            <input type="text" class="form-control" />
+                            <input type="text" class="form-control" name="page" th:value="${page}" />
                             <!-- 総ページ数 -->
                             <div class="input-group-addon">/ 20</div>
                         </div>
