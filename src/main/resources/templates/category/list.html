@@ -66,17 +66,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="childCategory : ${childCategoryList}">
-                        <div th:if="${parentCategory.name}==${#strings.substringBefore(childCategory.nameAll, '/')}">
-                            <td class="item-name">
-                                <a th:href="@{'/showEditCategory?id='+${childCategory.id}}">
-                                    <span th:text="${childCategory.name}">
+                    <div th:each="childCategory : ${childCategoryList}">
+                        <tr>
+                            <div
+                                th:if="${parentCategory.name}==${#strings.substringBefore(childCategory.nameAll, '/')}">
+                                <td class="item-name">
+                                    <a th:href="@{'/showEditCategory?id='+${childCategory.id}}">
+                                        <span th:text="${childCategory.name}">
+                                            Razer BlackWidowChroma Keyboard
+                                        </span>
+                                    </a>
+                                </td>
+                            </div>
+                        </tr>
+                        <!-- <tr th:each="grandChild :${grandChildList}">
+                            <div
+                                th:if="${childCategory.nameAll}==${#strings.substringBeforeLast(grandChild.nameAll, '/')}">
+                                <td class="item-name">
+                                    <span th:text="${grandChild.name}">
                                         Razer BlackWidowChroma Keyboard
                                     </span>
-                                </a>
-                            </td>
-                        </div>
-                    </tr>
+                                </td>
+                            </div>
+                        </tr> -->
+                    </div>
                     <tr>
                         <td>
                             <form th:action="@{/addChildCategory}" method="post">

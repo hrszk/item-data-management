@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category List</title>
+    <style>
+        /* Basic styling for the category list */
+        .category-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Styling for parent category */
+        .parent-category {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        /* Styling for child category */
+        .child-category {
+            background-color: #e0e0e0;
+            padding: 8px;
+            margin-left: 20px;
+            margin-top: 3px;
+        }
+
+        /* Styling for grandchild category */
+        .grandchild-category {
+            background-color: #d0d0d0;
+            padding: 6px;
+            margin-left: 40px;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul class="category-list">
+        <!-- Parent Category -->
+        <li class="parent-category">Parent Category 1
+            <!-- Child Categories -->
+            <ul>
+                <li class="child-category">Child Category 1.1
+                    <!-- Grandchild Categories -->
+                    <ul>
+                        <li class="grandchild-category">Grandchild Category 1.1.1</li>
+                        <li class="grandchild-category">Grandchild Category 1.1.2</li>
+                    </ul>
+                </li>
+                <li class="child-category">Child Category 1.2</li>
+            </ul>
+        </li>
+
+        <!-- Parent Category -->
+        <li class="parent-category">Parent Category 2
+            <!-- Child Categories -->
+            <ul>
+                <li class="child-category">Child Category 2.1</li>
+                <li class="child-category">Child Category 2.2</li>
+            </ul>
+        </li>
+    </ul>
+
+</body>
+
+</html>
