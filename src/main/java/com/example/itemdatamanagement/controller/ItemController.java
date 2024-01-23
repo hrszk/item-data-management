@@ -1,7 +1,6 @@
 package com.example.itemdatamanagement.controller;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Page;
 
 import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.Image;
-import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.form.SearchItemForm;
 import com.example.itemdatamanagement.service.CategoryService;
@@ -42,6 +40,8 @@ public class ItemController {
 
     @RequestMapping("/findAll")
     public String findAll(SearchItemForm form, Model model, Integer page) {
+        model.addAttribute("form", form);
+
         List<ItemAndCategory> itemAndCategoryList = null;
 
         // ページング機能追加
@@ -49,6 +49,7 @@ public class ItemController {
             // ページ数の指定が無い場合は1ページ目を表示させる
             page = 1;
         }
+        model.addAttribute("page", page);
 
         String nameAll;
 
@@ -87,8 +88,10 @@ public class ItemController {
         } else {
             // 検索ボックスに入力があれば条件を指定して検索
             itemAndCategoryList = itemAndCategoryService.searchItem(form.getName(), nameAll, form.getBrand());
+
             // ページングの数字からも検索できるように検索条件をスコープに格納しておく
             model.addAttribute("form", form);
+
             // 該当する検索結果がなければ全件返す
             if (itemAndCategoryList == null) {
                 itemAndCategoryList = itemService.findAll();
@@ -101,8 +104,8 @@ public class ItemController {
         model.addAttribute("itemPage", itemPage);
 
         // ページングのリンクに使うページ数をスコープに格納 (例)28件あり1ページにつき10件表示させる場合→1,2,3がpageNumbersに入る
-        // List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
-        // model.addAttribute("pageNumbers", pageNumbers);
+        int totalPages = itemPage.getTotalPages();
+        model.addAttribute("totalPages", totalPages);
 
         List<Category> parentCategoryList = categoryService.findAllParentCategory();
         model.addAttribute("parentCategoryList", parentCategoryList);
