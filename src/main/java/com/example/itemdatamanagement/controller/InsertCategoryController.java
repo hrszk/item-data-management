@@ -33,7 +33,18 @@ public class InsertCategoryController {
         category.setParentId(1);
         category.setNameAll(parentCategory + "/" + name);
 
-        categoryService.insertChildCategory(category);
+        categoryService.insertCategory(category);
+        return "redirect:/findAllCategory";
+    }
+
+    @PostMapping("/addGrandChild")
+    public String addGrandChild(String parentCategory, String childCategory, String name) {
+        Category category = new Category();
+        category.setName(name);
+        category.setParentId(2);
+        category.setNameAll(parentCategory + "/" + childCategory + "/" + name);
+
+        categoryService.insertCategory(category);
         return "redirect:/findAllCategory";
     }
 }

@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.util.StringUtils;
 
 import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.service.CategoryService;
@@ -27,6 +26,9 @@ public class CategoryController {
         List<Category> childCategoryList = categoryService.findAllChildCategory();
         model.addAttribute("childCategoryList", childCategoryList);
 
+        List<Category> grandChildList = categoryService.findAllGrandChild();
+        model.addAttribute("grandChildList", grandChildList);
+
         return "category/list";
     }
 
@@ -37,11 +39,4 @@ public class CategoryController {
         return "category/edit";
     }
 
-    @PostMapping("/updateChildCategory")
-    public String updateChildCategory(String name, String nameAll, Integer id) {
-
-        String parentCategory = StringUtils.substringBefore(nameAll, "/");
-        categoryService.updateChildCategory(name, parentCategory + "/" + name, id);
-        return "redirect:/findAllCategory";
-    }
 }
