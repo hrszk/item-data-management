@@ -3,68 +3,77 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Category List</title>
     <style>
-        /* Basic styling for the category list */
-        .category-list {
-            list-style-type: none;
-            padding: 0;
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
         }
 
-        /* Styling for parent category */
-        .parent-category {
-            background-color: #f0f0f0;
-            font-weight: bold;
-            padding: 10px;
-            margin-top: 5px;
-        }
-
-        /* Styling for child category */
-        .child-category {
-            background-color: #e0e0e0;
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
             padding: 8px;
-            margin-left: 20px;
-            margin-top: 3px;
         }
 
-        /* Styling for grandchild category */
-        .grandchild-category {
-            background-color: #d0d0d0;
-            padding: 6px;
-            margin-left: 40px;
-            margin-top: 2px;
+        th {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 
 <body>
 
-    <ul class="category-list">
-        <!-- Parent Category -->
-        <li class="parent-category">Parent Category 1
-            <!-- Child Categories -->
-            <ul>
-                <li class="child-category">Child Category 1.1
-                    <!-- Grandchild Categories -->
-                    <ul>
-                        <li class="grandchild-category">Grandchild Category 1.1.1</li>
-                        <li class="grandchild-category">Grandchild Category 1.1.2</li>
-                    </ul>
-                </li>
-                <li class="child-category">Child Category 1.2</li>
-            </ul>
-        </li>
+    <h2>Category List</h2>
 
-        <!-- Parent Category -->
-        <li class="parent-category">Parent Category 2
-            <!-- Child Categories -->
-            <ul>
-                <li class="child-category">Child Category 2.1</li>
-                <li class="child-category">Child Category 2.2</li>
-            </ul>
-        </li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>大カテゴリ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 大カテゴリのループ -->
+            <tr th:each="大カテゴリ : ${categories}">
+                <td th:text="${大カテゴリ.name}">大カテゴリ名</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>中カテゴリ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 中カテゴリのループ -->
+            <tr th:each="大カテゴリ : ${categories}">
+                <td th:each="中カテゴリ : ${大カテゴリ.subCategories}" th:text="${中カテゴリ.name}">中カテゴリ名</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table>
+        <thead>
+            <tr>
+                <th>小カテゴリ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 小カテゴリのループ -->
+            <tr th:each="大カテゴリ : ${categories}">
+                <td th:each="中カテゴリ : ${大カテゴリ.subCategories}">
+                    <ul th:if="${中カテゴリ.subCategories != null}">
+                        <li th:each="小カテゴリ : ${中カテゴリ.subCategories}" th:text="${小カテゴリ.name}">小カテゴリ名</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
 </body>
 

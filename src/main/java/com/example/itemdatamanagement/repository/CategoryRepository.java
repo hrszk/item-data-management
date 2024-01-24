@@ -112,7 +112,7 @@ public class CategoryRepository {
         template.update(Sql, param);
     }
 
-    public void insertChildCategory(Category category) {
+    public void insertCategory(Category category) {
         String Sql = """
                 INSERT INTO category(name,parent_id,name_all) VALUES(:name,:parentId,:nameAll);
                 """;

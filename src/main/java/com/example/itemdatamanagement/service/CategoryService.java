@@ -46,8 +46,8 @@ public class CategoryService {
         categoryRepository.insertParentCategory(name);
     }
 
-    public void insertChildCategory(Category category) {
-        categoryRepository.insertChildCategory(category);
+    public void insertCategory(Category category) {
+        categoryRepository.insertCategory(category);
     }
 
     public void updateChildCategory(String name, String nameAll, Integer id) {
