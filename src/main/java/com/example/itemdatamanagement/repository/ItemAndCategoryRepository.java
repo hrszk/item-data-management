@@ -59,4 +59,29 @@ public class ItemAndCategoryRepository {
         List<ItemAndCategory> itemAndCategoryList = template.query(sql, param, ITEMANDCATEGORY_ROW_MAPPER);
         return itemAndCategoryList;
     }
+
+    public ItemAndCategory searchByCategory(String nameAll) {
+        String sql = """
+                SELECT
+                    i.id AS i_id,
+                    i.name AS i_name,
+                    i.condition,
+                       i.category,
+                    c.name AS c_name,
+                    c.parent_id,
+                    c.name_all,
+                    i.brand,
+                    i.price,
+                    i.stock,
+                    i.shipping,
+                    i.description
+                from items i
+                INNER join category c ON i.category=c.id
+                WHERE c.name_all LIKE :nameAll;
+                        """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
+        List<ItemAndCategory> itemAndCategoryList = template.query(sql, param, ITEMANDCATEGORY_ROW_MAPPER);
+        return itemAndCategoryList.isEmpty() ? null : itemAndCategoryList.get(0);
+    }
 }

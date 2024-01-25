@@ -76,6 +76,8 @@
                 <thead>
                     <tr>
                         <th th:text="${parentCategory.name}">Beauty</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,9 +87,17 @@
                                 <td class="item-name" th:text="${childCategory.name}"></td>
                                 <td class="item-name">edit</td>
                                 <td class="item-name">
-                                    <button class="btn btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
+
+                                    <div th:if="${grandChildList}">
+                                        <form th:action="@{/deleteChildCategory}" method="post">
+                                            <input type="hidden" name="parentCategory"
+                                                th:value="${parentCategory.name}">
+                                            <input type="hidden" name="childCategory" th:value="${childCategory.name}">
+                                            <button type="submit" class="btn btn-danger">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             <tr class="grand-child">

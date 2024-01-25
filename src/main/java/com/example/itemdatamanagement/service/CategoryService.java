@@ -53,4 +53,12 @@ public class CategoryService {
     public void updateChildCategory(String name, String nameAll, Integer id) {
         categoryRepository.updateChildCategory(name, nameAll, id);
     }
+
+    public Category findByNameAllGrandChild(String nameAll) {
+        return categoryRepository.findByNameAllGrandChild(nameAll);
+    }
+
+    public void deleteCategoryByNameAll(String nameAll) {
+        categoryRepository.deleteCategoryByNameAll(nameAll);
+    }
 }
