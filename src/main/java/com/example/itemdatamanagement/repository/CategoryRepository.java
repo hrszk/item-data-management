@@ -27,6 +27,11 @@ public class CategoryRepository {
         return category;
     };
 
+    /**
+     * 親カテゴリ全件検索
+     * 
+     * @return 親カテゴリ一覧
+     */
     public List<Category> findAllParentCategory() {
         String findAllParentCategorySql = """
                 SELECT * FROM category WHERE parent_id IS NULL AND name IS NOT NULL
@@ -37,6 +42,11 @@ public class CategoryRepository {
         return parentCategoryList;
     }
 
+    /**
+     * 子カテゴリ全件検索
+     * 
+     * @return 子カテゴリ一覧
+     */
     public List<Category> findAllChildCategory() {
         String findAllParentCategorySql = """
                 SELECT  MIN(id) AS id,name,1 AS parent_id,MIN(name_all) AS name_all
@@ -50,6 +60,11 @@ public class CategoryRepository {
         return parentCategoryList;
     }
 
+    /**
+     * 孫カテゴリ全件検索
+     * 
+     * @return 孫カテゴリ一覧
+     */
     public List<Category> findAllGrandChild() {
         String findAllParentCategorySql = """
                 SELECT  MIN(id) AS id,name,2 AS parent_id,MIN(name_all) AS name_all
@@ -63,18 +78,51 @@ public class CategoryRepository {
         return parentCategoryList;
     }
 
+    /**
+     * カテゴリ削除
+     * 
+     * @param id
+     */
     public void deleteCategory(Integer id) {
         String sql = "DELETE FROM category WHERE id = :id;";
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         template.update(sql, param);
     }
 
+    public void deleteCategoryByNameAll(String nameAll) {
+        String sql = "DELETE FROM category WHERE name_all=:nameAll;";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll);
+        template.update(sql, param);
+    }
+
+    /**
+     * nameAllで検索
+     * 
+     * @param nameAll
+     * @return 検索結果の1件目または、検索結果がない場合はnull
+     */
     public Category findByNameCategory(String nameAll) {
         String sql = """
                 SELECT * FROM category WHERE name_all=:nameAll;
                     """;
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll);
+        List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
+        return categoryList.isEmpty() ? null : categoryList.get(0);
+    }
+
+    /**
+     * nameAllで孫カテゴリ検索
+     * 
+     * @param nameAll
+     * @return 検索結果の1件目または、検索結果がない場合はnull
+     */
+    public Category findByNameAllGrandChild(String nameAll) {
+        String sql = """
+                SELECT * FROM category WHERE name_all LIKE :nameAll AND parent_id=2;
+                    """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
         List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
         return categoryList.isEmpty() ? null : categoryList.get(0);
     }

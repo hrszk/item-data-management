@@ -45,4 +45,8 @@ public class ItemAndCategoryService {
                 itemAndCategoryList.size());
         return itemPage;
     }
+
+    public ItemAndCategory searchByCategory(String nameAll) {
+        return itemAndCategoryRepository.searchByCategory(nameAll);
+    }
 }
