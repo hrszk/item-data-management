@@ -1,5 +1,7 @@
 package com.example.itemdatamanagement.domain;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -24,11 +26,14 @@ public class ItemCsv {
     @JsonProperty("condition")
     private Integer condition;
 
-    @JsonProperty("deleted")
-    private boolean deleted;
+    @JsonProperty("updateTime")
+    private Date updateTime;
+
+    @JsonProperty("delFlg")
+    private Integer delFlg;
 
     public ItemCsv(Integer id, String name, double price, String category, String brand, Integer condition,
-            boolean deleted) {
+            Date updateTime, Integer delFlg) {
         super();
         this.id = id;
         this.name = name;
@@ -36,7 +41,8 @@ public class ItemCsv {
         this.category = category;
         this.brand = brand;
         this.condition = condition;
-        this.deleted = deleted;
+        this.updateTime = updateTime;
+        this.delFlg = delFlg;
     }
 
     public ItemCsv() {
@@ -90,12 +96,20 @@ public class ItemCsv {
         this.condition = condition;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public Integer getDelFlg() {
+        return delFlg;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
+    public void setDelFlg(Integer delFlg) {
+        this.delFlg = delFlg;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
 }

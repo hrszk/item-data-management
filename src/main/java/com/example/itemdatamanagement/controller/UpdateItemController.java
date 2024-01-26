@@ -120,7 +120,7 @@ public class UpdateItemController {
                 Files.copy(form.getImage().getInputStream(), imgFilePath);
             }
         }
-        return "redirect:/findAll";
+        return "redirect:/showItemList";
     }
 
 }

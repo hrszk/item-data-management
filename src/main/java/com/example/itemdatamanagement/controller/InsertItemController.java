@@ -1,10 +1,10 @@
 package com.example.itemdatamanagement.controller;
 
-import java.util.List;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +59,7 @@ public class InsertItemController {
         Item item = new Item();
         BeanUtils.copyProperties(form, item);
         item.setShipping(0);
+        item.setDelFlg(0);
 
         String nameAll;
         if (!form.getParentCategory().isEmpty() && !form.getChildCategory().isEmpty()
@@ -100,6 +101,6 @@ public class InsertItemController {
             imageService.insertImage(image);
 
         }
-        return "redirect:/findAll";
+        return "redirect:/showItemList";
     }
 }

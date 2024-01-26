@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.itemdatamanagement.domain.Item;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.domain.ItemCsv;
 import com.example.itemdatamanagement.service.ItemService;
@@ -39,7 +38,8 @@ public class ItemCsvController {
             itemCsv.setCategory(itemAndCategory.getNameAll());
             itemCsv.setBrand(itemAndCategory.getBrand());
             itemCsv.setCondition(itemAndCategory.getCondition());
-            itemCsv.setDeleted(itemAndCategory.isDeleted());
+            itemCsv.setUpdateTime(itemAndCategory.getUpdateTime());
+            itemCsv.setDelFlg(itemAndCategory.getDelFlg());
             itemCsvList.add(itemCsv);
         }
 

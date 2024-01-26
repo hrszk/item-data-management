@@ -1,5 +1,8 @@
 package com.example.itemdatamanagement.domain;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class Item {
     // id
     private Integer id;
@@ -19,17 +22,15 @@ public class Item {
     // 価格
     private double price;
 
-    // 在庫
-    private Integer stock;
-
     // ショッピング
     private Integer shipping;
 
     // 説明
     private String description;
 
-    // 論理削除
-    private boolean deleted;
+    private Timestamp updateTime;
+
+    private Integer delFlg;
 
     public Integer getId() {
         return id;
@@ -79,14 +80,6 @@ public class Item {
         this.price = price;
     }
 
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
     public Integer getShipping() {
         return shipping;
     }
@@ -103,18 +96,28 @@ public class Item {
         this.description = description;
     }
 
+    public Date getUpdateTime() {
+        Date date = new Date(updateTime.getTime());
+        return date;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getDelFlg() {
+        return delFlg;
+    }
+
+    public void setDelFlg(Integer delFlg) {
+        this.delFlg = delFlg;
+    }
+
     @Override
     public String toString() {
-        return "Item [id=" + id + ", name=" + name + ", condition=" + condition + ", category=" + category
-                + ", brand=" + brand + ", price=" + price + ", stock=" + stock + ", shipping=" + shipping
-                + ", description=" + description + "]";
+        return "Item [id=" + id + ", name=" + name + ", condition=" + condition + ", category=" + category + ", brand="
+                + brand + ", price=" + price + ", shipping=" + shipping + ", description=" + description
+                + ", updateTime=" + updateTime + ", delFlg=" + delFlg + "]";
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }

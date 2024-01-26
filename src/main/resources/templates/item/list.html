@@ -52,7 +52,7 @@
 
         <!-- 検索フォーム -->
         <div id="forms">
-            <form th:action="@{/findAll}" class="form-inline" role="form" method="post">
+            <form th:action="@{/showItemList}" class="form-inline" role="form" method="post">
                 <div class="form-group">
                     <input type="input" class="form-control" id="name" placeholder="item name" name="name"
                         th:value="${form.name}" />
@@ -99,13 +99,14 @@
                 <ul class="pager">
                     <li class="previous">
                         <span th:if="${page == 1}">&larr; prev</span>
-                        <a th:unless="${page == 1}" th:href="@{/findAll(page = ${page}-1,name = ${form.name})}">&larr;
+                        <a th:unless="${page == 1}"
+                            th:href="@{/showItemList(page = ${page}-1,name = ${form.name})}">&larr;
                             prev</a>
                     </li>
                     <li class="next">
                         <span th:if="${page} == ${totalPages}">next &rarr;</span>
                         <a th:unless="${page} == ${totalPages}"
-                            th:href="@{/findAll(page = ${page} + 1 , name = ${form.name})}">next
+                            th:href="@{/showItemList(page = ${page} + 1 , name = ${form.name})}">next
                             &rarr;</a>
                     </li>
                 </ul>
@@ -170,17 +171,17 @@
                 <ul class="pager">
                     <li class="previous">
                         <span th:if="${page == 1}">&larr; prev</span>
-                        <a th:unless="${page == 1}" th:href="@{/findAll(page = ${page} - 1)}">&larr; prev</a>
+                        <a th:unless="${page == 1}" th:href="@{/showItemList(page = ${page} - 1)}">&larr; prev</a>
                     </li>
                     <li class="next">
                         <span th:if="${page == 20}">next &rarr;</span>
-                        <a th:unless="${page == 20}" th:href="@{/findAll(page = ${page} + 1)}">next &rarr;</a>
+                        <a th:unless="${page == 20}" th:href="@{/showItemList(page = ${page} + 1)}">next &rarr;</a>
                     </li>
                 </ul>
             </nav>
             <!-- ページ番号を指定して表示するフォーム -->
             <div id="select-page">
-                <form class="form-inline" th:action="@{/findAll}" method="post">
+                <form class="form-inline" th:action="@{/showItemList}" method="post">
                     <div class="form-group">
                         <div class="input-group col-xs-6">
                             <label></label>

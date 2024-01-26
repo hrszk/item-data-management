@@ -19,9 +19,9 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public List<ItemAndCategory> findByName(String Name) {
-        return itemRepository.findByName(Name);
-    }
+    // public List<ItemAndCategory> findByName(String Name) {
+    // return itemRepository.findByName(Name);
+    // }
 
     public ItemAndCategory findById(Integer id) {
         return itemRepository.findById(id);

@@ -39,7 +39,7 @@ public class ItemController {
     private static final int VIEW_SIZE = 30;
 
     @RequestMapping("/showItemList")
-    public String findAll(SearchItemForm form, Model model, Integer page) {
+    public String showItemList(SearchItemForm form, Model model, Integer page) {
         model.addAttribute("form", form);
 
         List<ItemAndCategory> itemAndCategoryList = null;
@@ -118,12 +118,12 @@ public class ItemController {
         return "item/list";
     }
 
-    @GetMapping("/findByName")
-    public String findByName(String name, Model model) {
-        List<ItemAndCategory> itemAndCategoryList = itemService.findByName(name);
-        model.addAttribute("itemAndCategoryList", itemAndCategoryList);
-        return "item/list";
-    }
+    // @GetMapping("/findByName")
+    // public String findByName(String name, Model model) {
+    // List<ItemAndCategory> itemAndCategoryList = itemService.findByName(name);
+    // model.addAttribute("itemAndCategoryList", itemAndCategoryList);
+    // return "item/list";
+    // }
 
     @GetMapping("/showItemDetail")
     public String showItemDetail(Integer id, Model model) {
