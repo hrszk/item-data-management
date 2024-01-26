@@ -52,7 +52,40 @@ public class UserRepository {
                 password);
         List<User> userList = template.query(findByMailAddressAndPasswordSql, param, USER_ROW_MAPPER);
 
-        return userList. isEmpty() ? null : userList.get(0);
-        
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
+    public List<User> findAllUser() {
+        String sql = """
+                SELECT * FROM users ORDER BY id;
+                    """;
+        List<User> userList = template.query(sql, USER_ROW_MAPPER);
+        return userList;
+    }
+
+    public User findUserById(Integer id) {
+        String sql = """
+                SELECT * FROM users WHERE id=:id;
+                    """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        User user = template.queryForObject(sql, param, USER_ROW_MAPPER);
+        return user;
+    }
+
+    public void deleteUser(Integer id) {
+        String sql = """
+                DELETE FROM users WHERE id=:id;
+                    """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        template.update(sql, param);
+    }
+
+    public void UpdateUser(User user) {
+        String sql = """
+                UPDATE users SET name=:name,mail_address=:mailAddress,password=:password,authority=:authority
+                WHERE id=:id;
+                    """;
+        SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+        template.update(sql, param);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.itemdatamanagement.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,23 @@ public class UserService {
         userRepository.insertUser(user);
     }
 
-    public User findByMailAddressAndPassword(String mailAddress,String password){
-        return userRepository.findByMailAddressAndPassword(mailAddress,password);
+    public User findByMailAddressAndPassword(String mailAddress, String password) {
+        return userRepository.findByMailAddressAndPassword(mailAddress, password);
+    }
+
+    public List<User> findAllUser() {
+        return userRepository.findAllUser();
+    }
+
+    public User findUserById(Integer id) {
+        return userRepository.findUserById(id);
+    }
+
+    public void deleteUser(Integer id) {
+        userRepository.deleteUser(id);
+    }
+
+    public void updateUser(User user) {
+        userRepository.UpdateUser(user);
     }
 }
