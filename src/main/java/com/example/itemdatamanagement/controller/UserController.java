@@ -63,7 +63,11 @@ public class UserController {
             return "user/login";
         } else {
             session.setAttribute("user", user);
-            return "redirect:/findAll";
+            if (user.getAuthority() == 0) {
+                return "redirect:/showItemList";
+            } else {
+                return "redirect:/showUserList";
+            }
         }
     }
 

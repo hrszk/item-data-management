@@ -38,7 +38,7 @@ public class ItemController {
     // 1ページに表示する商品は30個
     private static final int VIEW_SIZE = 30;
 
-    @RequestMapping("/findAll")
+    @RequestMapping("/showItemList")
     public String findAll(SearchItemForm form, Model model, Integer page) {
         model.addAttribute("form", form);
 
@@ -142,7 +142,7 @@ public class ItemController {
 
     @GetMapping("/toPageItemList")
     public String toPageItemList() {
-        return "redirect:/findAll";
+        return "redirect:/showItemList";
     }
 
     @PostMapping("/deleteItem")
@@ -151,7 +151,7 @@ public class ItemController {
         // Integer categoryId = item.getCategory();
         // categoryService.deleteCategory(categoryId);
         itemService.deleteItem(id);
-        return "redirect:/findAll";
+        return "redirect:/showItemList";
     }
 
 }
