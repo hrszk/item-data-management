@@ -49,4 +49,12 @@ public class ItemAndCategoryService {
     public ItemAndCategory searchByCategory(String nameAll) {
         return itemAndCategoryRepository.searchByCategory(nameAll);
     }
+
+    public List<ItemAndCategory> findAll() {
+        return itemAndCategoryRepository.findAll();
+    }
+
+    public ItemAndCategory findById(Integer id) {
+        return itemAndCategoryRepository.findById(id);
+    }
 }

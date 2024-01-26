@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.domain.ItemCsv;
+import com.example.itemdatamanagement.service.ItemAndCategoryService;
 import com.example.itemdatamanagement.service.ItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 @RequestMapping("/csv")
 public class ItemCsvController {
     @Autowired
-    private ItemService itemService;
+    private ItemAndCategoryService itemAndCategoryService;
 
     @GetMapping(value = "/data.csv", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE
             + "; charset=Shift_JIS; Content-Disposition: attachment")
@@ -29,7 +30,7 @@ public class ItemCsvController {
     public Object getCsv() throws JsonProcessingException {
 
         List<ItemCsv> itemCsvList = new ArrayList<>();
-        List<ItemAndCategory> itemAndCategoryList = itemService.findAll();
+        List<ItemAndCategory> itemAndCategoryList = itemAndCategoryService.findAll();
         for (ItemAndCategory itemAndCategory : itemAndCategoryList) {
             ItemCsv itemCsv = new ItemCsv();
             itemCsv.setId(itemAndCategory.getId());

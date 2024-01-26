@@ -83,7 +83,7 @@ public class ItemController {
 
         if (form.getName() == null && nameAll == null && form.getBrand() == null) {
             // 検索ボックスが空なら全件検索
-            itemAndCategoryList = itemService.findAll();
+            itemAndCategoryList = itemAndCategoryService.findAll();
             model.addAttribute("itemAndCategoryList", itemAndCategoryList);
         } else {
             // 検索ボックスに入力があれば条件を指定して検索
@@ -94,7 +94,7 @@ public class ItemController {
 
             // 該当する検索結果がなければ全件返す
             if (itemAndCategoryList == null) {
-                itemAndCategoryList = itemService.findAll();
+                itemAndCategoryList = itemAndCategoryService.findAll();
                 model.addAttribute("notFindAll", "Not Find");
             }
         }
@@ -118,16 +118,9 @@ public class ItemController {
         return "item/list";
     }
 
-    // @GetMapping("/findByName")
-    // public String findByName(String name, Model model) {
-    // List<ItemAndCategory> itemAndCategoryList = itemService.findByName(name);
-    // model.addAttribute("itemAndCategoryList", itemAndCategoryList);
-    // return "item/list";
-    // }
-
     @GetMapping("/showItemDetail")
     public String showItemDetail(Integer id, Model model) {
-        ItemAndCategory itemAndCategory = itemService.findById(id);
+        ItemAndCategory itemAndCategory = itemAndCategoryService.findById(id);
         model.addAttribute("itemAndCategory", itemAndCategory);
 
         Image image = imageService.findByIdImage(id);

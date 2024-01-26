@@ -35,6 +35,38 @@ public class ItemAndCategoryRepository {
         return itemAndCategory;
     };
 
+    /**
+     * itemとcategory全件検索
+     * 
+     * @return itemとcategory全件
+     */
+    public List<ItemAndCategory> findAll() {
+        String findAllSql = """
+                SELECT
+                    i.id AS i_id,
+                    i.name AS i_name,
+                    i.condition,
+                    i.category,
+                    c.name AS c_name,
+                    c.parent,
+                    c.name_all,
+                    i.brand,
+                    i.price,
+                    i.shipping,
+                    i.description,
+                    i.update_time,
+                    i.del_flg
+                from items i
+                INNER join category c ON i.category=c.id
+                WHERE i.shipping=0
+                ORDER by c.name_all
+                LIMIT 600;
+                """;
+        List<ItemAndCategory> itemAndCategoryList = template.query(findAllSql,
+                ITEMANDCATEGORY_ROW_MAPPER);
+        return itemAndCategoryList;
+    }
+
     public List<ItemAndCategory> searchItem(String name, String nameAll, String brand) {
         String sql = """
                 SELECT
@@ -86,5 +118,30 @@ public class ItemAndCategoryRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
         List<ItemAndCategory> itemAndCategoryList = template.query(sql, param, ITEMANDCATEGORY_ROW_MAPPER);
         return itemAndCategoryList.isEmpty() ? null : itemAndCategoryList.get(0);
+    }
+
+    public ItemAndCategory findById(Integer id) {
+        String findByIdSql = """
+                SELECT
+                    i.id AS i_id,
+                    i.name AS i_name,
+                    i.condition,
+                    i.category,
+                    c.name AS c_name,
+                    c.parent,
+                    c.name_all,
+                    i.brand,
+                    i.price,
+                    i.shipping,
+                    i.description,
+                    i.update_time,
+                    i.del_flg
+                from items i
+                INNER join category c ON i.category=c.id
+                WHERE i.id=:id
+                    """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+        ItemAndCategory itemAndCategory = template.queryForObject(findByIdSql, param, ITEMANDCATEGORY_ROW_MAPPER);
+        return itemAndCategory;
     }
 }
