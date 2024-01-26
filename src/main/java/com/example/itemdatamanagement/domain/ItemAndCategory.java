@@ -1,5 +1,8 @@
 package com.example.itemdatamanagement.domain;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 public class ItemAndCategory {
     // id
     private Integer id;
@@ -15,7 +18,7 @@ public class ItemAndCategory {
 
     private String categoryName;
 
-    private Integer parentId;
+    private Integer parent;
 
     private String NameAll;
 
@@ -25,17 +28,16 @@ public class ItemAndCategory {
     // 価格
     private double price;
 
-    // 在庫
-    private Integer stock;
-
     // ショッピング
     private Integer shipping;
 
     // 説明
     private String description;
 
+    private Timestamp updateTime;
+
     // 論理削除
-    private boolean deleted;
+    private Integer delFlg;
 
     public Integer getId() {
         return id;
@@ -77,12 +79,12 @@ public class ItemAndCategory {
         this.categoryName = categoryName;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getParent() {
+        return parent;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setParent(Integer parent) {
+        this.parent = parent;
     }
 
     public String getNameAll() {
@@ -109,14 +111,6 @@ public class ItemAndCategory {
         this.price = price;
     }
 
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
     public Integer getShipping() {
         return shipping;
     }
@@ -133,20 +127,29 @@ public class ItemAndCategory {
         this.description = description;
     }
 
+    public Date getUpdateTime() {
+        Date date = new Date(updateTime.getTime());
+        return date;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getDelFlg() {
+        return delFlg;
+    }
+
+    public void setDelFlg(Integer delFlg) {
+        this.delFlg = delFlg;
+    }
+
     @Override
     public String toString() {
         return "ItemAndCategory [id=" + id + ", name=" + name + ", condition=" + condition + ", category=" + category
-                + ", categoryName=" + categoryName + ", parentId=" + parentId + ", NameAll=" + NameAll + ", brand="
-                + brand + ", price=" + price + ", stock=" + stock + ", shipping=" + shipping + ", description="
-                + description + "]";
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
+                + ", categoryName=" + categoryName + ", parent=" + parent + ", NameAll=" + NameAll + ", brand=" + brand
+                + ", price=" + price + ", shipping=" + shipping + ", description=" + description + ", updateTime="
+                + updateTime + ", delFlg=" + delFlg + "]";
     }
 
 }

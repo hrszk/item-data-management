@@ -1,0 +1,115 @@
+実行手順
+
+１.テーブルの作成
+
+-- オリジナルテーブルの作成
+drop table if exists original cascade;
+
+CREATE TABLE original (
+    id Integer PRIMARY KEY NOT NULL
+	,name CHARACTER VARYING(255)
+	,condition_id INTEGER 
+	,category_name CHARACTER VARYING(255)
+	,brand CHARACTER VARYING(255) 
+	,price DOUBLE PRECISION 
+	,shipping INTEGER
+	,description TEXT
+);
+
+-- ユーザーテーブルの作成
+drop table if exists users cascade;
+
+CREATE TABLE users (
+    id serial PRIMARY KEY NOT NULL
+	,name CHARACTER VARYING(255)
+	,mail_address CHARACTER VARYING(255)
+	,password CHARACTER VARYING(255)
+	,authority INTEGER 
+);
+
+-- カテゴリーテーブルの作成
+drop table if exists category cascade;
+
+CREATE TABLE category (
+    id serial PRIMARY KEY NOT NULL
+	,parent INTEGER
+	,name CHARACTER VARYING(255)
+	,name_all CHARACTER VARYING(255) 
+);
+
+-- 商品テーブルの作成
+drop table if exists items cascade;
+
+CREATE TABLE items (
+    id serial PRIMARY KEY NOT NULL
+	,name CHARACTER VARYING(255)
+	,condition INTEGER 
+	,category INTEGER 
+	,brand CHARACTER VARYING(255)
+	,price DOUBLE PRECISION 
+	,shipping INTEGER 
+	,description TEXT
+	,update_time TIMESTAMP
+	,del_flg INTEGER
+);
+
+
+２.originalテーブルにデータ流し込み
+
+-- ターミナルからDBへ接続
+psql -h localhost -p 5432 -U postgres -d item-data-management
+-- データの流し込み
+\COPY original FROM '/Users/harasuzuka/src/train 3.tsv' WITH DELIMITER E'\t' CSV HEADER;
+
+
+３.category_nameのデータを整える（/区切り３つ目までに修正）
+
+UPDATE original
+SET category_name = SPLIT_PART(category_name, '/', 1) || '/' || SPLIT_PART(category_name, '/', 2)|| '/' || SPLIT_PART(category_name, '/', 3)
+
+
+４.categoryテーブルにデータ流し込み
+
+-- categoryテーブルにデータの流し込み
+INSERT INTO category (name, parent, name_all)
+SELECT
+split_part(category_name, '/', 1) AS name,
+NULL AS parent,
+NULL AS name_all
+FROM original
+UNION
+SELECT
+split_part(category_name, '/', 2) AS name,
+1 AS parent,
+NULL AS name_all
+FROM original
+WHERE position('/' IN category_name) > 0
+UNION
+SELECT
+split_part(category_name, '/', 3) AS name,
+2 AS parent,
+split_part(category_name, '/', 1) || '/' || split_part(category_name, '/', 2) || '/' || split_part(category_name, '/', 3) AS name_all
+FROM original
+WHERE position('/' IN category_name) > 0;
+
+
+５.itemテーブルにデータの流し込み
+
+-- itemsテーブルにデータの流し込み
+
+-- itemsテーブルにデータの流し込み
+INSERT INTO items (name,condition,category,brand,price,shipping,description)
+SELECT
+o.name AS name,
+o.condition_id AS condition,
+c.id AS category,
+o.brand AS brand,
+o.price AS price,
+o.shipping AS shipping,
+o.description AS description
+FROM original o
+JOIN category c ON o.category_name=c.name_all;
+
+
+
+

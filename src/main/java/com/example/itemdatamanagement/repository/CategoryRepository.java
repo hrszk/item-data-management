@@ -21,8 +21,8 @@ public class CategoryRepository {
     private static final RowMapper<Category> CATEGORY_ROW_MAPPER = (rs, i) -> {
         Category category = new Category();
         category.setId(rs.getInt("id"));
+        category.setParent(rs.getInt("parent"));
         category.setName(rs.getString("name"));
-        category.setParentId(rs.getInt("parent_id"));
         category.setNameAll(rs.getString("name_all"));
         return category;
     };
@@ -34,7 +34,7 @@ public class CategoryRepository {
      */
     public List<Category> findAllParentCategory() {
         String findAllParentCategorySql = """
-                SELECT * FROM category WHERE parent_id IS NULL AND name IS NOT NULL
+                SELECT * FROM category WHERE parent IS NULL AND name IS NOT NULL
                 ORDER BY name;
                     """;
 
@@ -49,9 +49,9 @@ public class CategoryRepository {
      */
     public List<Category> findAllChildCategory() {
         String findAllParentCategorySql = """
-                SELECT  MIN(id) AS id,name,1 AS parent_id,MIN(name_all) AS name_all
+                SELECT  MIN(id) AS id,name,1 AS parent,MIN(name_all) AS name_all
                 FROM category
-                WHERE parent_id=1
+                WHERE parent=1
                 GROUP by name
                 order by name;
                         """;
@@ -67,9 +67,9 @@ public class CategoryRepository {
      */
     public List<Category> findAllGrandChild() {
         String findAllParentCategorySql = """
-                SELECT  MIN(id) AS id,name,2 AS parent_id,MIN(name_all) AS name_all
+                SELECT  MIN(id) AS id,name,2 AS parent,MIN(name_all) AS name_all
                 FROM category
-                WHERE parent_id=2 AND name_all IS NOT NULL
+                WHERE parent=2 AND name_all IS NOT NULL
                 GROUP by name
                 order by name;
                         """;
@@ -119,7 +119,7 @@ public class CategoryRepository {
      */
     public Category findByNameAllGrandChild(String nameAll) {
         String sql = """
-                SELECT * FROM category WHERE name_all LIKE :nameAll AND parent_id=2;
+                SELECT * FROM category WHERE name_all LIKE :nameAll AND parent=2;
                     """;
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
@@ -139,9 +139,9 @@ public class CategoryRepository {
 
     public List<Category> findByParentCategory(String parentCategory) {
         String sql = """
-                SELECT  MIN(id) AS id,name,2 AS parent_id,MIN(name_all) AS name_all
+                SELECT  MIN(id) AS id,name,2 AS parent,MIN(name_all) AS name_all
                 FROM category
-                WHERE parent_id=2 AND name_all LIKE :parentCategory
+                WHERE parent=2 AND name_all LIKE :parentCategory
                 GROUP by name
                 order by name;
                     """;
@@ -162,7 +162,7 @@ public class CategoryRepository {
 
     public void insertCategory(Category category) {
         String Sql = """
-                INSERT INTO category(name,parent_id,name_all) VALUES(:name,:parentId,:nameAll);
+                INSERT INTO category(name,parent,name_all) VALUES(:name,:parent,:nameAll);
                 """;
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(category);

@@ -11,7 +11,6 @@ public class InsertItemForm {
     private String grandChild;
     private String brand;
     private Integer condition;
-    private Integer shipping;
     private String description;
     private MultipartFile image;
 
@@ -71,14 +70,6 @@ public class InsertItemForm {
         this.condition = condition;
     }
 
-    public Integer getShipping() {
-        return shipping;
-    }
-
-    public void setShipping(Integer shipping) {
-        this.shipping = shipping;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -99,7 +90,7 @@ public class InsertItemForm {
     public String toString() {
         return "InsertItemForm [name=" + name + ", price=" + price + ", parentCategory=" + parentCategory
                 + ", childCategory=" + childCategory + ", grandChild=" + grandChild + ", brand=" + brand
-                + ", condition=" + condition + ", shipping=" + shipping + ", description=" + description + ", image="
+                + ", condition=" + condition + ", description=" + description + ", image="
                 + image + "]";
     }
 

@@ -30,7 +30,7 @@ public class InsertCategoryController {
     public String addChildCategory(String parentCategory, String name) {
         Category category = new Category();
         category.setName(name);
-        category.setParentId(1);
+        category.setParent(1);
         category.setNameAll(parentCategory + "/" + name);
 
         categoryService.insertCategory(category);
@@ -41,7 +41,7 @@ public class InsertCategoryController {
     public String addGrandChild(String parentCategory, String childCategory, String name) {
         Category category = new Category();
         category.setName(name);
-        category.setParentId(2);
+        category.setParent(2);
         category.setNameAll(parentCategory + "/" + childCategory + "/" + name);
 
         categoryService.insertCategory(category);

@@ -24,13 +24,14 @@ public class ItemAndCategoryRepository {
         itemAndCategory.setCondition(rs.getInt("condition"));
         itemAndCategory.setCategory(rs.getInt("category"));
         itemAndCategory.setCategoryName(rs.getString("c_name"));
-        itemAndCategory.setParentId(rs.getInt("parent_id"));
+        itemAndCategory.setParent(rs.getInt("parent"));
         itemAndCategory.setNameAll(rs.getString("name_all"));
         itemAndCategory.setBrand(rs.getString("brand"));
         itemAndCategory.setPrice(rs.getDouble("price"));
-        itemAndCategory.setStock(rs.getInt("stock"));
         itemAndCategory.setShipping(rs.getInt("shipping"));
         itemAndCategory.setDescription(rs.getString("description"));
+        itemAndCategory.setUpdateTime(rs.getTimestamp("update_time"));
+        itemAndCategory.setDelFlg(rs.getInt("del_flg"));
         return itemAndCategory;
     };
 
@@ -40,18 +41,20 @@ public class ItemAndCategoryRepository {
                     i.id AS i_id,
                     i.name AS i_name,
                     i.condition,
-                       i.category,
+                    i.category,
                     c.name AS c_name,
-                    c.parent_id,
+                    c.parent,
                     c.name_all,
                     i.brand,
                     i.price,
-                    i.stock,
                     i.shipping,
-                    i.description
+                    i.description,
+                    i.update_time,
+                    i.del_flg
                 from items i
                 INNER join category c ON i.category=c.id
-                WHERE i.name LIKE :name AND c.name_all LIKE :nameAll AND i.brand LIKE :brand;
+                WHERE i.name LIKE :name AND c.name_all LIKE :nameAll AND i.brand LIKE :brand
+                ORDER by c.name_all;
                         """;
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%")
@@ -66,7 +69,7 @@ public class ItemAndCategoryRepository {
                     i.id AS i_id,
                     i.name AS i_name,
                     i.condition,
-                       i.category,
+                    i.category,
                     c.name AS c_name,
                     c.parent_id,
                     c.name_all,

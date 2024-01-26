@@ -2,8 +2,8 @@ package com.example.itemdatamanagement.domain;
 
 public class Category {
     private Integer id;
+    private Integer parent;
     private String name;
-    private Integer parentId;
     private String nameAll;
 
     public Integer getId() {
@@ -22,12 +22,12 @@ public class Category {
         this.name = name;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getParent() {
+        return parent;
     }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
+    public void setParent(Integer parent) {
+        this.parent = parent;
     }
 
     public String getNameAll() {
@@ -40,7 +40,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "category [id=" + id + ", name=" + name + ", parentId=" + parentId + ", nameAll=" + nameAll + "]";
+        return "category [id=" + id + ", name=" + name + ", parentId=" + parent + ", nameAll=" + nameAll + "]";
     }
 
 }

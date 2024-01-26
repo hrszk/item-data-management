@@ -26,14 +26,14 @@ public class ItemRepository {
         itemAndCategory.setCondition(rs.getInt("condition"));
         itemAndCategory.setCategory(rs.getInt("category"));
         itemAndCategory.setCategoryName(rs.getString("c_name"));
-        itemAndCategory.setParentId(rs.getInt("parent_id"));
+        itemAndCategory.setParent(rs.getInt("parent"));
         itemAndCategory.setNameAll(rs.getString("name_all"));
         itemAndCategory.setBrand(rs.getString("brand"));
         itemAndCategory.setPrice(rs.getDouble("price"));
-        itemAndCategory.setStock(rs.getInt("stock"));
         itemAndCategory.setShipping(rs.getInt("shipping"));
         itemAndCategory.setDescription(rs.getString("description"));
-        itemAndCategory.setDeleted(rs.getBoolean("deleted"));
+        itemAndCategory.setUpdateTime(rs.getTimestamp("update_time"));
+        itemAndCategory.setDelFlg(rs.getInt("del_flg"));
         return itemAndCategory;
     };
 
@@ -45,10 +45,10 @@ public class ItemRepository {
         item.setCategory(rs.getInt("category"));
         item.setBrand(rs.getString("brand"));
         item.setPrice(rs.getDouble("price"));
-        item.setStock(rs.getInt("stock"));
         item.setShipping(rs.getInt("shipping"));
         item.setDescription(rs.getString("description"));
-        item.setDeleted(rs.getBoolean("deleted"));
+        item.setUpdateTime(rs.getTimestamp("update_time"));
+        item.setDelFlg(rs.getInt("del_flg"));
         return item;
     };
 
@@ -60,26 +60,25 @@ public class ItemRepository {
     public List<ItemAndCategory> findAll() {
         String findAllSql = """
                 SELECT
-                	i.id AS i_id,
-                	i.name AS i_name,
-                	i.condition,
-                	i.category,
-                	c.name AS c_name,
-                	c.parent_id,
-                	c.name_all,
-                	i.brand,
-                	i.price,
-                	i.stock,
-                	i.shipping,
-                	i.description,
-                    i.deleted
+                    i.id AS i_id,
+                    i.name AS i_name,
+                    i.condition,
+                    i.category,
+                    c.name AS c_name,
+                    c.parent,
+                    c.name_all,
+                    i.brand,
+                    i.price,
+                    i.shipping,
+                    i.description,
+                    i.update_time,
+                    i.del_flg
                 from items i
                 INNER join category c ON i.category=c.id
-                WHERE i.deleted=false
-                ORDER by i_id DESC
+                WHERE i.shipping=0
+                ORDER by c.name_all
                 LIMIT 600;
-                                """;
-        ;
+                """;
         List<ItemAndCategory> itemAndCategoryList = template.query(findAllSql,
                 ITEMANDCATEGORY_ROW_MAPPER);
         return itemAndCategoryList;
@@ -91,29 +90,33 @@ public class ItemRepository {
      * @param name
      * @return 対象のitemとcategory全件
      */
-    public List<ItemAndCategory> findByName(String name) {
-        String findByNameSql = """
-                SELECT
-                                    i.id AS i_id,
-                                    i.name AS i_name,
-                                    i.condition,
-                                    i.category,
-                                    c.name AS c_name,
-                                    c.parent_id,
-                                    c.name_all,
-                                    i.brand,
-                                    i.price,
-                                    i.stock,
-                                    i.shipping,
-                                    i.description
-                                from items i
-                                INNER join category c ON i.category=c.id
-                    WHERE i.name LIKE ':name';
-                    """;
-        SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
-        List<ItemAndCategory> itemAndCategoryList = template.query(findByNameSql, param, ITEMANDCATEGORY_ROW_MAPPER);
-        return itemAndCategoryList;
-    }
+    // public List<ItemAndCategory> findByName(String name) {
+    // String findByNameSql = """
+    // SELECT
+    // i.id AS i_id,
+    // i.name AS i_name,
+    // i.condition,
+    // i.category,
+    // c.name AS c_name,
+    // c.parent,
+    // c.name_all,
+    // i.brand,
+    // i.price,
+    // i.shipping,
+    // i.description,
+    // i.update_time,
+    // i.del_flg
+    // from items i
+    // INNER join category c ON i.category=c.id
+    // WHERE i.name LIKE ':name';
+    // ORDER by c.name_all
+    // """;
+    // SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" +
+    // name + "%");
+    // List<ItemAndCategory> itemAndCategoryList = template.query(findByNameSql,
+    // param, ITEMANDCATEGORY_ROW_MAPPER);
+    // return itemAndCategoryList;
+    // }
 
     /**
      * idでitemとcategoryの検索
@@ -129,17 +132,17 @@ public class ItemRepository {
                     i.condition,
                     i.category,
                     c.name AS c_name,
-                    c.parent_id,
+                    c.parent,
                     c.name_all,
                     i.brand,
                     i.price,
-                    i.stock,
                     i.shipping,
                     i.description,
-                    i.deleted
-                    from items i
+                    i.update_time,
+                    i.del_flg
+                from items i
                 INNER join category c ON i.category=c.id
-                WHERE i.id=:id;
+                WHERE i.id=:id
                     """;
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         ItemAndCategory itemAndCategory = template.queryForObject(findByIdSql, param, ITEMANDCATEGORY_ROW_MAPPER);
@@ -152,7 +155,7 @@ public class ItemRepository {
      * @param id
      */
     public void deleteItem(Integer id) {
-        String deleteItemSql = "UPDATE items SET deleted=true WHERE id=:id;";
+        String deleteItemSql = "UPDATE items SET del_flg=1 WHERE id=:id;";
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
         template.update(deleteItemSql, param);
@@ -187,8 +190,8 @@ public class ItemRepository {
 
     public void insertItem(Item item) {
         String sql = """
-                INSERT INTO items(name,condition,category,brand,price,shipping,description)
-                values(:name,:condition,:category,:brand,:price,:shipping,:description);
+                INSERT INTO items(name,condition,category,brand,price,shipping,description,update_time,del_flg)
+                values(:name,:condition,:category,:brand,:price,:shipping,:description,NOW(),:delFlg);
                     """;
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);
