@@ -50,11 +50,24 @@ public class UserController {
         return "user/login";
     }
 
+    /**
+     * ログイン画面の表示
+     * 
+     * @return ログイン画面
+     */
     @GetMapping("/login")
     public String toPageUserLogin() {
         return "user/login";
     }
 
+    /**
+     * ログイン機能
+     * 
+     * @param mailAddress String型 メールアドレス
+     * @param password    String型 パスワード
+     * @param model       リクエストスコープ
+     * @return
+     */
     @PostMapping("/userLogin")
     public String userLogin(String mailAddress, String password, Model model) {
         User user = userService.findByMailAddressAndPassword(mailAddress, password);
