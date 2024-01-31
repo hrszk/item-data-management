@@ -2,6 +2,7 @@ package com.example.itemdatamanagement.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.thymeleaf.util.StringUtils;
 
 import com.example.itemdatamanagement.domain.Category;
+import com.example.itemdatamanagement.form.UpdateCategoryForm;
 import com.example.itemdatamanagement.service.CategoryService;
 
 @Controller
@@ -44,8 +46,26 @@ public class UpdateCategoryController {
         return "redirect:/showCategoryList";
     }
 
-    @PostMapping("/editGrandChild")
-    public String editGrandChild(String name, String nameAll, Integer id) {
+    /**
+     * 小カテゴリの編集
+     * 
+     * @param name
+     * @param nameAll
+     * @param id
+     * @return
+     */
+    @PostMapping("/updateGrandChild")
+    public String updateGrandChild(UpdateCategoryForm form) {
+
+        String[] categories = form.getNameAll().split("/");
+        String nameAll = categories[0] + "/" + categories[1] + "/" + form.getName();
+
+        Category category = new Category();
+        BeanUtils.copyProperties(form, category);
+        category.setNameAll(nameAll);
+        category.setParent(2);
+
+        categoryService.updateCategory(category);
 
         return "redirect:/showCategoryList";
     }
