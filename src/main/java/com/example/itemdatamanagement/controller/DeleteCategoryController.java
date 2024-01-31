@@ -38,6 +38,12 @@ public class DeleteCategoryController {
             redirectAttributes.addFlashAttribute("error", "cannot be deleted");
         }
 
-        return "redirect:/findAllCategory";
+        return "redirect:/showCategoryList";
+    }
+
+    @PostMapping("/deleteGrandChild")
+    public String deleteGrandChild(String nameAll, Integer id, Model model) {
+        categoryService.deleteCategoryByNameAll(nameAll);
+        return "redirect:/showCategoryList";
     }
 }

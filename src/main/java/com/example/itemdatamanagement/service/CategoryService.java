@@ -50,8 +50,8 @@ public class CategoryService {
         categoryRepository.insertCategory(category);
     }
 
-    public void updateChildCategory(String name, String nameAll, Integer id) {
-        categoryRepository.updateChildCategory(name, nameAll, id);
+    public void updateChildCategoryAndGrandChild(String name, String nameAll, Integer id) {
+        categoryRepository.updateChildCategoryAndGrandChild(name, nameAll, id);
     }
 
     public Category findByNameAllGrandChild(String nameAll) {

@@ -76,8 +76,8 @@
                 <thead>
                     <tr>
                         <th th:text="${parentCategory.name}">Beauty</th>
-                        <th></th>
-                        <th></th>
+                        <th>edit</th>
+                        <th>delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,7 +85,11 @@
                         <div th:if="${parentCategory.name}==${#strings.substringBefore(childCategory.nameAll, '/')}">
                             <tr class="child-category" onclick="changeDisplay()">
                                 <td class="item-name" th:text="${childCategory.name}"></td>
-                                <td class="item-name">edit</td>
+                                <td>
+                                    <a href="">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                </td>
                                 <td class="item-name">
 
                                     <div th:if="${grandChildList}">
@@ -93,9 +97,9 @@
                                             <input type="hidden" name="parentCategory"
                                                 th:value="${parentCategory.name}">
                                             <input type="hidden" name="childCategory" th:value="${childCategory.name}">
-                                            <button type="submit" class="btn btn-danger">
+                                            <a href="">
                                                 <span class="glyphicon glyphicon-trash"></span>
-                                            </button>
+                                            </a>
                                         </form>
                                     </div>
                                 </td>
@@ -104,22 +108,22 @@
                                 <td>
                                     <ul th:each="grandChild : ${grandChildList}">
                                         <div th:if="${#strings.contains(grandChild.nameAll,childCategory.nameAll)}">
-                                            <li th:text="${grandChild.name}"></li>
+                                            <li>
+                                                <a th:href="@{'/showGrandChild?id='+${grandChild.id}(nameAll=${grandChild.nameAll})}"
+                                                    th:text="${grandChild.name}"></a>
+                                            </li>
                                         </div>
                                     </ul>
                                     <ul>
-                                        <li>
-                                            <form th:action="@{/addGrandChild}" method="post">
-                                                <input type="hidden" name="parentCategory"
-                                                    th:value="${parentCategory.name}">
-                                                <input type="hidden" name="childCategory"
-                                                    th:value="${childCategory.name}">
-                                                <input type="text" name="name">
-                                                <button type="submit" class="btn btn-default">
-                                                    <i class="fa fa-plus-square-o"></i> Add
-                                                    grandChildCategory</button>
-                                            </form>
-                                        </li>
+                                        <form th:action="@{/addGrandChild}" method="post">
+                                            <input type="hidden" name="parentCategory"
+                                                th:value="${parentCategory.name}">
+                                            <input type="hidden" name="childCategory" th:value="${childCategory.name}">
+                                            <input type="text" name="name">
+                                            <button type="submit" class="btn btn-default">
+                                                <i class="fa fa-plus-square-o"></i> Add
+                                                grandChildCategory</button>
+                                        </form>
                                     </ul>
                                 </td>
                             </tr>
