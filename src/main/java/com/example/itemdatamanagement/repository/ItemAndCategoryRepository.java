@@ -103,13 +103,14 @@ public class ItemAndCategoryRepository {
                     i.condition,
                     i.category,
                     c.name AS c_name,
-                    c.parent_id,
+                    c.parent,
                     c.name_all,
                     i.brand,
                     i.price,
-                    i.stock,
                     i.shipping,
-                    i.description
+                    i.description,
+                    i.update_time,
+                    i.del_flg
                 from items i
                 INNER join category c ON i.category=c.id
                 WHERE c.name_all LIKE :nameAll;

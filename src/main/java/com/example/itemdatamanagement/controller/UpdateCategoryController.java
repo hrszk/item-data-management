@@ -27,12 +27,27 @@ public class UpdateCategoryController {
         model.addAttribute("parentCategoryList", parentCategoryList);
         return "category/edit-parent";
     }
-    
-    @PostMapping("/updateChildCategory")
-    public String updateChildCategory(String name, String nameAll, Integer id) {
+
+    /**
+     * 中カテゴリの編集
+     * 
+     * @param name    カテゴリ名
+     * @param nameAll カテゴリ名（フル）
+     * @param id      カテゴリID
+     * @return カテゴリ一覧
+     */
+    @PostMapping("/editChildCategory")
+    public String editChildCategory(String name, String nameAll, Integer id) {
 
         String parentCategory = StringUtils.substringBefore(nameAll, "/");
-        categoryService.updateChildCategory(name, parentCategory + "/" + name, id);
-        return "redirect:/findAllCategory";
+        categoryService.updateChildCategoryAndGrandChild(name, parentCategory + "/" + name, id);
+        return "redirect:/showCategoryList";
     }
+
+    @PostMapping("/editGrandChild")
+    public String editGrandChild(String name, String nameAll, Integer id) {
+
+        return "redirect:/showCategoryList";
+    }
+
 }

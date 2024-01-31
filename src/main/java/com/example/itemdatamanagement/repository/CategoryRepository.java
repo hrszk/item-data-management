@@ -169,7 +169,14 @@ public class CategoryRepository {
         template.update(Sql, param);
     }
 
-    public void updateChildCategory(String name, String nameAll, Integer id) {
+    /**
+     * 中カテゴリ、小カテゴリの編集
+     * 
+     * @param name    カテゴリ名
+     * @param nameAll カテゴリ名全文
+     * @param id      カテゴリID
+     */
+    public void updateChildCategoryAndGrandChild(String name, String nameAll, Integer id) {
         String sql = """
                 UPDATE category SET name=:name,name_All=:nameAll WHERE id=:id;
                     """;
@@ -178,4 +185,5 @@ public class CategoryRepository {
                 .addValue("id", id);
         template.update(sql, param);
     }
+
 }

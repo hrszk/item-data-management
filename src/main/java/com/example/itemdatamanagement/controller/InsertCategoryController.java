@@ -23,7 +23,7 @@ public class InsertCategoryController {
     @PostMapping("/addCategory")
     public String addCategory(String name) {
         categoryService.insertParentCategory(name);
-        return "redirect:/findAllCategory";
+        return "redirect:/showCategoryList";
     }
 
     @PostMapping("/addChildCategory")
@@ -34,7 +34,7 @@ public class InsertCategoryController {
         category.setNameAll(parentCategory + "/" + name);
 
         categoryService.insertCategory(category);
-        return "redirect:/findAllCategory";
+        return "redirect:/showCategoryList";
     }
 
     @PostMapping("/addGrandChild")
@@ -45,6 +45,6 @@ public class InsertCategoryController {
         category.setNameAll(parentCategory + "/" + childCategory + "/" + name);
 
         categoryService.insertCategory(category);
-        return "redirect:/findAllCategory";
+        return "redirect:/showCategoryList";
     }
 }
