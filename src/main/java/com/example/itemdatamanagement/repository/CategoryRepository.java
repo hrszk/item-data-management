@@ -173,7 +173,7 @@ public class CategoryRepository {
      * 中カテゴリ、小カテゴリの編集
      * 
      * @param name    カテゴリ名
-     * @param nameAll カテゴリ名全文
+     * @param nameAll カテゴリ名（フル）
      * @param id      カテゴリID
      */
     public void updateChildCategoryAndGrandChild(String name, String nameAll, Integer id) {
@@ -183,6 +183,20 @@ public class CategoryRepository {
 
         SqlParameterSource param = new MapSqlParameterSource().addValue("name", name).addValue("nameAll", nameAll)
                 .addValue("id", id);
+        template.update(sql, param);
+    }
+
+    /**
+     * カテゴリの編集
+     * 
+     * @param category
+     */
+    public void updateCategory(Category category) {
+        String sql = """
+                UPDATE category SET name=:name,name_All=:nameAll WHERE id=:id;
+                    """;
+
+        SqlParameterSource param = new BeanPropertySqlParameterSource(category);
         template.update(sql, param);
     }
 

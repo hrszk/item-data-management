@@ -56,6 +56,10 @@ public class CategoryController {
         Category category = categoryService.findByIdCategory(id);
         model.addAttribute("category", category);
 
+        String[] categories = category.getNameAll().split("/");
+        model.addAttribute("parentCategory", categories[0]);
+        model.addAttribute("childCategory", categories[1]);
+
         ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(nameAll);
         if (itemAndCategory != null) {
             model.addAttribute("error", "cannot be deleted");
