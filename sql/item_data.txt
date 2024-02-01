@@ -111,5 +111,29 @@ FROM original o
 JOIN category c ON o.category_name=c.name_all;
 
 
+６．インデックスの設定
+
+-- categoryテーブル
+CREATE UNIQUE INDEX category_pkc ON category(id);
+CREATE UNIQUE INDEX category_pki ON category(id);
+CREATE INDEX parent_id_index ON category(parent);
+
+-- itemsテーブル
+CREATE UNIQUE INDEX items_pkc ON items(id);
+CREATE INDEX items_brand_index ON items(brand);
+CREATE INDEX items_category_index ON items(category);
+CREATE UNIQUE INDEX items_pki ON items(id);
+
+-- originalテーブル
+CREATE UNIQUE INDEX original_pkc ON original(id);
+CREATE INDEX brand_index ON original(brand);
+CREATE UNIQUE INDEX original_pki ON original(id);
+
+-- usersテーブル
+CREATE UNIQUE INDEX users_pkc ON users(id);
+CREATE UNIQUE INDEX users_pki ON users(id);
+
+-- INDEXの設定確認
+SELECT * FROM pg_indexes where tablename = 'テーブル名';
 
 

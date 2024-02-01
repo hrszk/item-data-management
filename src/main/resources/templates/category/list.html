@@ -76,7 +76,6 @@
                 <thead>
                     <tr>
                         <th th:text="${parentCategory.name}">Beauty</th>
-                        <th>edit</th>
                         <th>delete</th>
                     </tr>
                 </thead>
@@ -84,14 +83,11 @@
                     <div th:each="childCategory : ${childCategoryList}">
                         <div th:if="${parentCategory.name}==${#strings.substringBefore(childCategory.nameAll, '/')}">
                             <tr class="child-category" onclick="changeDisplay()">
-                                <td class="item-name" th:text="${childCategory.name}"></td>
-                                <td>
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </a>
+                                <td class="item-name">
+                                    <a th:href="@{'/showChildCategory?id='+${childCategory.id}}"
+                                        th:text="${childCategory.name}"></a>
                                 </td>
                                 <td class="item-name">
-
                                     <div th:if="${grandChildList}">
                                         <form th:action="@{/deleteChildCategory}" method="post">
                                             <input type="hidden" name="parentCategory"
@@ -109,7 +105,7 @@
                                     <ul th:each="grandChild : ${grandChildList}">
                                         <div th:if="${#strings.contains(grandChild.nameAll,childCategory.nameAll)}">
                                             <li>
-                                                <a th:href="@{'/showGrandChild?id='+${grandChild.id}(nameAll=${grandChild.nameAll})}"
+                                                <a th:href="@{'/showGrandChild?id='+${grandChild.id}}"
                                                     th:text="${grandChild.name}"></a>
                                             </li>
                                         </div>

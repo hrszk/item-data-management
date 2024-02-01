@@ -14,6 +14,7 @@ import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ItemAndCategoryService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping({ "", "/" })
@@ -51,8 +52,15 @@ public class CategoryController {
         return "category/edit";
     }
 
+    /**
+     * 小カテゴリの編集画面へ遷移
+     * 
+     * @param id    カテゴリID
+     * @param model スコープの準備
+     * @return 小カテゴリの編集画面
+     */
     @GetMapping("/showGrandChild")
-    public String showGrandChild(Integer id, String nameAll, Model model) {
+    public String showGrandChild(Integer id, Model model) {
         Category category = categoryService.findByIdCategory(id);
         model.addAttribute("category", category);
 
@@ -60,11 +68,36 @@ public class CategoryController {
         model.addAttribute("parentCategory", categories[0]);
         model.addAttribute("childCategory", categories[1]);
 
-        ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(nameAll);
+        ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(category.getNameAll());
         if (itemAndCategory != null) {
             model.addAttribute("error", "cannot be deleted");
         }
         return "category/edit-grandchild";
+    }
+
+    /**
+     * 中カテゴリの編集画面へ遷移
+     * 
+     * @param id    カテゴリID
+     * @param model スコープの準備
+     * @return 中カテゴリの編集画面
+     */
+    @GetMapping("/showChildCategory")
+    public String showChildCategory(Integer id, Model model) {
+        Category category = categoryService.findByIdCategory(id);
+        model.addAttribute("category", category);
+
+        // カテゴリに紐づく商品登録がないか検索
+        ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(category.getNameAll());
+        // カテゴリに紐づく小カテゴリがないか検索
+        Category category2 = categoryService.findCategoryByNameAllAndParent(category.getNameAll(), 2);
+
+        // 商品と子カテゴリに紐づいている場合は削除ボタンにエラーメッセージを表示
+        if (itemAndCategory != null || category2 != null) {
+            model.addAttribute("error", "cannot be deleted");
+        }
+
+        return "category/edit-childcategory";
     }
 
 }
