@@ -31,18 +31,34 @@ public class UpdateCategoryController {
     }
 
     /**
-     * 中カテゴリの編集
+     * 中カテゴリ編集
      * 
-     * @param name    カテゴリ名
-     * @param nameAll カテゴリ名（フル）
-     * @param id      カテゴリID
+     * @param nameAll 変更前のカテゴリ名（フル）
+     * @param form    カテゴリ情報のフォーム
      * @return カテゴリ一覧
      */
-    @PostMapping("/editChildCategory")
-    public String editChildCategory(String name, String nameAll, Integer id) {
+    @PostMapping("/updateChildCategory")
+    public String updateChildCategory(String nameAll, UpdateCategoryForm form) {
 
+        // カテゴリ名(フル)の編集
         String parentCategory = StringUtils.substringBefore(nameAll, "/");
-        categoryService.updateChildCategoryAndGrandChild(name, parentCategory + "/" + name, id);
+        String childCategoryNameAll = parentCategory + "/" + form.getName();
+
+        // 変更したいカテゴリ情報をセット
+        Category category = new Category();
+        BeanUtils.copyProperties(form, category);
+        category.setNameAll(childCategoryNameAll);
+        // 中カテゴリの更新
+        categoryService.updateCategory(category);
+
+        // 中カテゴリに紐づく小カテゴリの一覧取得
+        List<Category> categoryList = categoryService.findCategoryByNameAll(nameAll);
+
+        for (Category category2 : categoryList) {
+            String grandChildNameAll = childCategoryNameAll + "/" + category2.getName();
+            categoryService.updateNameAll(grandChildNameAll, category2.getId());
+        }
+
         return "redirect:/showCategoryList";
     }
 
@@ -63,7 +79,6 @@ public class UpdateCategoryController {
         Category category = new Category();
         BeanUtils.copyProperties(form, category);
         category.setNameAll(nameAll);
-        category.setParent(2);
 
         categoryService.updateCategory(category);
 
