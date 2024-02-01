@@ -112,17 +112,18 @@ public class CategoryRepository {
     }
 
     /**
-     * nameAllで孫カテゴリ検索
+     * nameAllでカテゴリのリスト
      * 
      * @param nameAll
      * @return 検索結果の1件目または、検索結果がない場合はnull
      */
-    public Category findByNameAllGrandChild(String nameAll) {
+    public Category findCategoryByNameAllAndParent(String nameAll, Integer parent) {
         String sql = """
-                SELECT * FROM category WHERE name_all LIKE :nameAll AND parent=2;
+                SELECT * FROM category WHERE name_all LIKE :nameAll AND parent=:parent;
                     """;
 
-        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%").addValue("parent",
+                parent);
         List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
         return categoryList.isEmpty() ? null : categoryList.get(0);
     }

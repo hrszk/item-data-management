@@ -21,28 +21,15 @@ public class DeleteCategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @Autowired
-    private ItemAndCategoryService itemAndCategoryService;
-
-    @PostMapping("/deleteChildCategory")
-    public String deleteChildCategory(String parentCategory, String childCategory,
-            RedirectAttributes redirectAttributes) {
-        String nameAll = parentCategory + "/" + childCategory;
-        Category category = categoryService.findByNameAllGrandChild(nameAll);
-
-        ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(nameAll);
-
-        if (category == null && itemAndCategory == null) {
-            categoryService.deleteCategoryByNameAll(nameAll);
-        } else {
-            redirectAttributes.addFlashAttribute("error", "cannot be deleted");
-        }
-
-        return "redirect:/showCategoryList";
-    }
-
-    @PostMapping("/deleteGrandChild")
-    public String deleteGrandChild(String nameAll, Integer id, Model model) {
+    /**
+     * カテゴリの削除
+     * 
+     * @param nameAll カテゴリ名（フル）
+     * @param model   スコープの準備
+     * @return カテゴリ一覧表示
+     */
+    @PostMapping("/deleteCategory")
+    public String deleteCategory(String nameAll, Model model) {
         categoryService.deleteCategoryByNameAll(nameAll);
         return "redirect:/showCategoryList";
     }
