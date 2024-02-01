@@ -58,11 +58,19 @@ public class CategoryService {
         return categoryRepository.findCategoryByNameAllAndParent(nameAll, parent);
     }
 
-    public void deleteCategoryByNameAll(String nameAll) {
-        categoryRepository.deleteCategoryByNameAll(nameAll);
-    }
-
     public void updateCategory(Category category) {
         categoryRepository.updateCategory(category);
+    }
+
+    public List<Category> findCategoryByNameAll(String nameAll) {
+        return categoryRepository.findCategoryByNameAll(nameAll);
+    }
+
+    public void updateNameAll(String nameAll, Integer id) {
+        categoryRepository.updateNameAll(nameAll, id);
+    }
+
+    public void deleteCategoryByNameAll(String nameAll) {
+        categoryRepository.deleteCategoryByNameAll(nameAll);
     }
 }

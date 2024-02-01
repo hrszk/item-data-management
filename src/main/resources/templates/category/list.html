@@ -76,7 +76,6 @@
                 <thead>
                     <tr>
                         <th th:text="${parentCategory.name}">Beauty</th>
-                        <th>delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,18 +85,6 @@
                                 <td class="item-name">
                                     <a th:href="@{'/showChildCategory?id='+${childCategory.id}}"
                                         th:text="${childCategory.name}"></a>
-                                </td>
-                                <td class="item-name">
-                                    <div th:if="${grandChildList}">
-                                        <form th:action="@{/deleteChildCategory}" method="post">
-                                            <input type="hidden" name="parentCategory"
-                                                th:value="${parentCategory.name}">
-                                            <input type="hidden" name="childCategory" th:value="${childCategory.name}">
-                                            <a href="">
-                                                <span class="glyphicon glyphicon-trash"></span>
-                                            </a>
-                                        </form>
-                                    </div>
                                 </td>
                             </tr>
                             <tr class="grand-child">

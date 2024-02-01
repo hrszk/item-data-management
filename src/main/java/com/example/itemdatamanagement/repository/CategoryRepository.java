@@ -89,14 +89,8 @@ public class CategoryRepository {
         template.update(sql, param);
     }
 
-    public void deleteCategoryByNameAll(String nameAll) {
-        String sql = "DELETE FROM category WHERE name_all=:nameAll;";
-        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll);
-        template.update(sql, param);
-    }
-
     /**
-     * nameAllで検索
+     * nameAllで対象のリストがあるか検索
      * 
      * @param nameAll
      * @return 検索結果の1件目または、検索結果がない場合はnull
@@ -112,7 +106,23 @@ public class CategoryRepository {
     }
 
     /**
-     * nameAllでカテゴリのリスト
+     * nameAllで曖昧検索
+     * 
+     * @param nameAll カテゴリ名（フル）
+     * @return カテゴリリスト
+     */
+    public List<Category> findCategoryByNameAll(String nameAll) {
+        String sql = """
+                SELECT * FROM category WHERE name_all LIKE :nameAll;
+                    """;
+
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll + "%");
+        List<Category> categoryList = template.query(sql, param, CATEGORY_ROW_MAPPER);
+        return categoryList;
+    }
+
+    /**
+     * nameAllとparentでカテゴリの検索
      * 
      * @param nameAll
      * @return 検索結果の1件目または、検索結果がない場合はnull
@@ -161,6 +171,11 @@ public class CategoryRepository {
         template.update(Sql, param);
     }
 
+    /**
+     * カテゴリの追加
+     * 
+     * @param category
+     */
     public void insertCategory(Category category) {
         String Sql = """
                 INSERT INTO category(name,parent,name_all) VALUES(:name,:parent,:nameAll);
@@ -195,9 +210,34 @@ public class CategoryRepository {
     public void updateCategory(Category category) {
         String sql = """
                 UPDATE category SET name=:name,name_All=:nameAll WHERE id=:id;
-                    """;
+                        """;
 
         SqlParameterSource param = new BeanPropertySqlParameterSource(category);
+        template.update(sql, param);
+    }
+
+    /**
+     * カテゴリ名（フル）の編集
+     * 
+     * @param nameAll カテゴリ名（フル）
+     * @param id      カテゴリID
+     */
+    public void updateNameAll(String nameAll, Integer id) {
+        String sql = """
+                UPDATE category SET name_All=:nameAll WHERE id=:id;
+                    """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll).addValue("id", id);
+        template.update(sql, param);
+    }
+
+    /**
+     * カテゴリ名（フル）からカテゴリを削除
+     * 
+     * @param nameAll
+     */
+    public void deleteCategoryByNameAll(String nameAll) {
+        String sql = "DELETE FROM category WHERE name_all=:nameAll;";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("nameAll", nameAll);
         template.update(sql, param);
     }
 
