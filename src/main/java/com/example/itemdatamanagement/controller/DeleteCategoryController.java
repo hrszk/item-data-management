@@ -23,8 +23,14 @@ public class DeleteCategoryController {
      * @return カテゴリ一覧表示
      */
     @PostMapping("/deleteCategory")
-    public String deleteCategory(String nameAll, Model model) {
+    public String deleteCategory(String nameAll) {
         categoryService.deleteCategoryByNameAll(nameAll);
+        return "redirect:/showCategoryList";
+    }
+
+    @PostMapping("/deleteParentCategory")
+    public String deleteParentCategory(String name) {
+        categoryService.deleteParentCategory(name);
         return "redirect:/showCategoryList";
     }
 }

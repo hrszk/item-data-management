@@ -73,4 +73,8 @@ public class CategoryService {
     public void deleteCategoryByNameAll(String nameAll) {
         categoryRepository.deleteCategoryByNameAll(nameAll);
     }
+
+    public void deleteParentCategory(String name) {
+        categoryRepository.deleteParentCategory(name);
+    }
 }

@@ -8,13 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.service.CategoryService;
 import com.example.itemdatamanagement.service.ItemAndCategoryService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping({ "", "/" })
@@ -82,22 +80,34 @@ public class CategoryController {
      * @param model スコープの準備
      * @return 中カテゴリの編集画面
      */
-    @GetMapping("/showChildCategory")
+    @GetMapping("/showCategory")
     public String showChildCategory(Integer id, Model model) {
+
         Category category = categoryService.findByIdCategory(id);
         model.addAttribute("category", category);
 
-        // カテゴリに紐づく商品登録がないか検索
-        ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(category.getNameAll());
-        // カテゴリに紐づく小カテゴリがないか検索
-        Category category2 = categoryService.findCategoryByNameAllAndParent(category.getNameAll(), 2);
+        if (category.getParent() == 1) {
+            // カテゴリに紐づく商品登録がないか検索
+            ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(category.getNameAll());
+            // カテゴリに紐づく小カテゴリがないか検索
+            Category category2 = categoryService.findCategoryByNameAllAndParent(category.getNameAll(), 2);
 
-        // 商品と子カテゴリに紐づいている場合は削除ボタンにエラーメッセージを表示
-        if (itemAndCategory != null || category2 != null) {
-            model.addAttribute("error", "cannot be deleted");
+            // 商品と子カテゴリに紐づいている場合は削除ボタンにエラーメッセージを表示
+            if (itemAndCategory != null || category2 != null) {
+                model.addAttribute("error", "cannot be deleted");
+            }
+            return "category/edit-childcategory";
+
+        } else {
+            ItemAndCategory itemAndCategory = itemAndCategoryService.searchByCategory(category.getName());
+            Category category2 = categoryService.findCategoryByNameAllAndParent(category.getName(), 1);
+
+            if (itemAndCategory != null || category2 != null) {
+                model.addAttribute("error", "cannot be deleted");
+            }
+            return "category/edit-parentcategory";
+
         }
-
-        return "category/edit-childcategory";
     }
 
 }
