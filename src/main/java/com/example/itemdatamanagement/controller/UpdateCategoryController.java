@@ -22,14 +22,6 @@ public class UpdateCategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/toPageEditParentCategory")
-    public String toPageEditParentCategory(Model model) {
-
-        List<Category> parentCategoryList = categoryService.findAllParentCategory();
-        model.addAttribute("parentCategoryList", parentCategoryList);
-        return "category/edit-parent";
-    }
-
     /**
      * 中カテゴリ編集
      * 
@@ -38,10 +30,10 @@ public class UpdateCategoryController {
      * @return カテゴリ一覧
      */
     @PostMapping("/updateChildCategory")
-    public String updateChildCategory(String nameAll, UpdateCategoryForm form) {
+    public String updateChildCategory(UpdateCategoryForm form) {
 
         // カテゴリ名(フル)の編集
-        String parentCategory = StringUtils.substringBefore(nameAll, "/");
+        String parentCategory = StringUtils.substringBefore(form.getNameAll(), "/");
         String childCategoryNameAll = parentCategory + "/" + form.getName();
 
         // 変更したいカテゴリ情報をセット
@@ -52,11 +44,38 @@ public class UpdateCategoryController {
         categoryService.updateCategory(category);
 
         // 中カテゴリに紐づく小カテゴリの一覧取得
-        List<Category> categoryList = categoryService.findCategoryByNameAll(nameAll);
+        List<Category> categoryList = categoryService.findCategoryByNameAll(form.getNameAll());
 
         for (Category category2 : categoryList) {
             String grandChildNameAll = childCategoryNameAll + "/" + category2.getName();
             categoryService.updateNameAll(grandChildNameAll, category2.getId());
+        }
+
+        return "redirect:/showCategoryList";
+    }
+
+    @PostMapping("/updateParentCategory")
+    public String updateParentCategory(String oldName, UpdateCategoryForm form) {
+
+        // 変更したいカテゴリ情報をセット
+        Category category = new Category();
+        BeanUtils.copyProperties(form, category);
+        // 大カテゴリの更新
+        categoryService.updateCategory(category);
+
+        // 大カテゴリに紐づく小カテゴリの一覧取得
+        List<Category> categoryList = categoryService.findCategoryByNameAll(oldName);
+
+        for (Category category2 : categoryList) {
+
+            if (category2.getParent() == 1) {
+                String ChildCategoryNameAll = form.getName() + "/" + category2.getName();
+                categoryService.updateNameAll(ChildCategoryNameAll, category2.getId());
+
+            } else {
+                String grandChildNameAll = category2.getNameAll().replaceFirst(oldName, form.getName());
+                categoryService.updateNameAll(grandChildNameAll, category2.getId());
+            }
         }
 
         return "redirect:/showCategoryList";

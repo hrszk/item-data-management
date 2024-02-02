@@ -50,9 +50,9 @@
         <h2>Edit</h2>
 
         <!-- add form -->
-        <form th:action="@{/updateChildCategory}" method="post" class="form-horizontal">
+        <form th:action="@{/updateParentCategory}" method="post" class="form-horizontal">
             <input type="hidden" name="id" th:value="${category.id}">
-            <input type="hidden" name="nameAll" th:value="${category.nameAll}">
+            <input type="hidden" name="oldName" th:value="${category.name}">
             <!-- name -->
             <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">parent category</label>
