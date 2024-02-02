@@ -241,4 +241,9 @@ public class CategoryRepository {
         template.update(sql, param);
     }
 
+    public void deleteParentCategory(String name) {
+        String sql = "DELETE FROM category WHERE name=:name AND parent IS NULL;";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", name);
+        template.update(sql, param);
+    }
 }

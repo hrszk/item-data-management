@@ -75,7 +75,10 @@
                 th:each="parentCategory : ${parentCategoryList}">
                 <thead>
                     <tr>
-                        <th th:text="${parentCategory.name}">Beauty</th>
+                        <th>
+                            <a th:href="@{'/showCategory?id='+${parentCategory.id}}"
+                                th:text="${parentCategory.name}"></a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,7 +86,7 @@
                         <div th:if="${parentCategory.name}==${#strings.substringBefore(childCategory.nameAll, '/')}">
                             <tr class="child-category" onclick="changeDisplay()">
                                 <td class="item-name">
-                                    <a th:href="@{'/showChildCategory?id='+${childCategory.id}}"
+                                    <a th:href="@{'/showCategory?id='+${childCategory.id}}"
                                         th:text="${childCategory.name}"></a>
                                 </td>
                             </tr>

@@ -49,45 +49,39 @@
         <a type="button" class="btn btn-default" th:href="@{/showCategoryList}"><i class="fa fa-reply"></i> back</a>
         <h2>Edit</h2>
 
-        <!-- edit form -->
+        <!-- add form -->
         <form th:action="@{/updateChildCategory}" method="post" class="form-horizontal">
-            <!-- <input type="hidden" name="id" th:value="${category.id}">
-            <input type="hidden" name="nameAll" th:value="${category.nameAll}"> -->
+            <input type="hidden" name="id" th:value="${category.id}">
+            <input type="hidden" name="nameAll" th:value="${category.nameAll}">
             <!-- name -->
             <div class="form-group">
-                <!-- <label for="name" class="col-sm-2 control-label">ParentCategory</label>
+                <label for="name" class="col-sm-2 control-label">parent category</label>
                 <div class="col-sm-8">
-                    <div th:each="parentCategory:${parentCategoryList}">
-                        <input type="text" class="form-control" id="name" name="name"
-                            th:value="${parentCategory.name}" />
-                    </div>
-                </div> -->
-                <div class="table-responsive">
-                    <table id="category-table" class="table table-hover table-condensed">
-                        <tr>
-                            <th>parent category</th>
-                            <th></th>
-                            <th></th>
-                        </tr>
-                        <tr th:each="parentCategory:${parentCategoryList}">
-                            <td th:text="${parentCategory.name}"></td>
-                            <td>
-                                <a href="">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <form th:action="@{/deleteParentCategory}" method="post">
-                                    <input type="hidden" name="id" th:value="${parentCategory.id}">
-                                    <!-- <input type="hidden" name="childCategory" th:value="${childCategory.name}"> -->
-                                    <a href="">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
+                    <input type="text" class="form-control" id="name" name="name" th:value="${category.name}" />
+                    <span class="text-danger">error:may not be empty</span>
                 </div>
+            </div>
+            <!-- submit button -->
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+        <form th:action="@{/deleteParentCategory}" method="post">
+            <div th:if="${error != null}">
+                <div>
+                    <span th:text="${error}" style="color: red;"></span>
+                </div>
+                <button type="submit" disabled class="btn btn-default">
+                    <i class="glyphicon glyphicon-trash"> Delete </i>
+                </button>
+            </div>
+            <div th:if="${error == null}">
+                <input type="hidden" name="name" th:value="${category.name}">
+                <button type="submit" class="btn btn-default">
+                    <i class="glyphicon glyphicon-trash"> Delete </i>
+                </button>
             </div>
         </form>
     </div>
