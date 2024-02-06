@@ -11,13 +11,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.itemdatamanagement.domain.User;
 import com.example.itemdatamanagement.form.InsertUserForm;
 import com.example.itemdatamanagement.form.UpdateUserForm;
 import com.example.itemdatamanagement.service.UserService;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -84,6 +82,12 @@ public class UserController {
         }
     }
 
+    /**
+     * ユーザー一覧表示
+     * 
+     * @param model スコープの準備
+     * @return ユーザー一覧画面
+     */
     @GetMapping("/showUserList")
     public String showUserList(Model model) {
         List<User> userList = userService.findAllUser();
@@ -91,6 +95,13 @@ public class UserController {
         return "administrator/list";
     }
 
+    /**
+     * ユーザー詳細情報表示
+     * 
+     * @param id    ユーザーID
+     * @param model スコープの準備
+     * @return ユーザー詳細画面
+     */
     @GetMapping("/showUserDetail")
     public String showUserDetail(Integer id, Model model) {
         User user = userService.findUserById(id);
@@ -117,5 +128,11 @@ public class UserController {
         BeanUtils.copyProperties(form, user);
         userService.updateUser(user);
         return "redirect:/showUserList";
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.removeAttribute("user");
+        return "user/login";
     }
 }

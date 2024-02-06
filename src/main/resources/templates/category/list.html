@@ -48,7 +48,7 @@
         <div id="navbar" class="collapse navbar-collapse">
             <div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a id="logout" href="./login.html">Logout <i class="fa fa-power-off"></i></a></li>
+                    <li><a id="logout" th:href="@{/logout}">Logout <i class="fa fa-power-off"></i></a></li>
                 </ul>
                 <p class="navbar-text navbar-right">
                     <span id="loginName" th:text="${session.user.name}">user: userName</span>
