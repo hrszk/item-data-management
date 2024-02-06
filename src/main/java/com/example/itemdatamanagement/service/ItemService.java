@@ -12,6 +12,11 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
+    /**
+     * 商品の論理削除
+     * 
+     * @param id 商品ID
+     */
     public void deleteItem(Integer id) {
         itemRepository.deleteItem(id);
     }

@@ -34,9 +34,9 @@ public class ItemRepository {
     };
 
     /**
-     * itemの削除
+     * itemの論理削除
      * 
-     * @param id
+     * @param id 商品ID
      */
     public void deleteItem(Integer id) {
         String deleteItemSql = "UPDATE items SET del_flg=1 WHERE id=:id;";

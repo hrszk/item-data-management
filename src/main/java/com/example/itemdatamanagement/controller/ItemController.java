@@ -138,13 +138,4 @@ public class ItemController {
         return "redirect:/showItemList";
     }
 
-    @PostMapping("/deleteItem")
-    public String deleteItem(Integer id) {
-        // Item item = itemService.findByIdItem(id);
-        // Integer categoryId = item.getCategory();
-        // categoryService.deleteCategory(categoryId);
-        itemService.deleteItem(id);
-        return "redirect:/showItemList";
-    }
-
 }

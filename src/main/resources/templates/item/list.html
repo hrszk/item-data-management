@@ -59,7 +59,8 @@
                 </div>
                 <div class="form-group"><i class="fa fa-plus"></i></div>
                 <div class="form-group">
-                    <select class="form-control" name="parentCategory">
+                    <select class="form-control" name="parentCategory" id="parentCategory"
+                        onchange="updateChildCategory()">
                         <option value="">- parentCategory -</option>
                         <option th:each="parentCategory : ${parentCategoryList}">
                             <span th:text="${parentCategory.name}" th:value="${form.parentCategory}">
@@ -67,7 +68,7 @@
                             </span>
                         </option>
                     </select>
-                    <select class="form-control" name="childCategory">
+                    <select class="form-control" name="childCategory" id="childCategory">
                         <option value="">- childCategory -</option>
                         <option th:each="childCategory : ${childCategoryList}">
                             <span th:text="${childCategory.name}" th:value="${form.childCategory}">
@@ -75,7 +76,7 @@
                             </span>
                         </option>
                     </select>
-                    <select class="form-control" name="grandChild">
+                    <select class="form-control" name="grandChild" id="grandChild">
                         <option value="">- grandChild -</option>
                         <option th:each="grandChild : ${grandChildList}">
                             <span th:text="${grandChild.name}" th:value="${form.grandChild}">
@@ -196,6 +197,30 @@
                 </form>
             </div>
         </div>
+        <script>
+            function updateChildCategory() {
+                var parentCategory = document.getElementById("parentCategory");
+                var childCategory = document.getElementById("childCategory");
+                var grandChild = document.getElementById("grandChild");
+                var selectedParantCategory = parentCategory.value;
+
+                // 中カテゴリの選択肢を動的に更新
+                if (selectedParantCategory === "カテゴリ1") {
+                    childCategory.innerHTML = ""; // 中カテゴリの選択肢をクリア
+                    var options = ["カテゴリ1-1", "カテゴリ1-2", "カテゴリ1-3"]; // カテゴリ1に紐づく中カテゴリの選択肢
+                    options.forEach(function (option) {
+                        var opt = document.createElement("option");
+                        opt.value = option;
+                        opt.text = option;
+                        中カテゴリ.add(opt);
+                    });
+                } else if (selected大カテゴリ === "カテゴリ2") {
+                    // カテゴリ2に紐づく中カテゴリの選択肢を設定
+                }
+                // 他の大カテゴリに対する中カテゴリの選択肢の設定
+            }
+
+        </script>
     </div>
 </body>
 
