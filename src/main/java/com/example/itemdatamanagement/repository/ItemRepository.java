@@ -59,13 +59,13 @@ public class ItemRepository {
     }
 
     /**
-     * itemデータの更新
+     * itemの更新
      * 
      * @param item
      */
     public void updeteItem(Item item) {
         String sql = """
-                UPDATE items SET name=:name,price=:price,category=:category,brand=:brand,condition=:condition,description=:description
+                UPDATE items SET name=:name,price=:price,category=:category,brand=:brand,condition=:condition,description=:description,update_time=NOW()
                 WHERE id=:id;
                 """;
         SqlParameterSource param = new BeanPropertySqlParameterSource(item);

@@ -46,70 +46,8 @@
 
     <div id="main" class="container-fluid">
 
-        <!-- 検索フォーム -->
-        <!-- <div id="forms">
-            <form th:action="@{/showItemList}" class="form-inline" role="form" method="post">
-                <div class="form-group">
-                    <input type="input" class="form-control" id="name" placeholder="item name" name="name"
-                        th:value="${form.name}" />
-                </div>
-                <div class="form-group"><i class="fa fa-plus"></i></div>
-                <div class="form-group">
-                    <select class="form-control" name="parentCategory">
-                        <option value="">- parentCategory -</option>
-                        <option th:each="parentCategory : ${parentCategoryList}">
-                            <span th:text="${parentCategory.name}" th:value="${form.parentCategory}">
-                                parentCategory1
-                            </span>
-                        </option>
-                    </select>
-                    <select class="form-control" name="childCategory">
-                        <option value="">- childCategory -</option>
-                        <option th:each="childCategory : ${childCategoryList}">
-                            <span th:text="${childCategory.name}" th:value="${form.childCategory}">
-                                childCategory1
-                            </span>
-                        </option>
-                    </select>
-                    <select class="form-control" name="grandChild">
-                        <option value="">- grandChild -</option>
-                        <option th:each="grandChild : ${grandChildList}">
-                            <span th:text="${grandChild.name}" th:value="${form.grandChild}">
-                                grandChild1
-                            </span>
-                        </option>
-                    </select>
-                </div>
-                <div class="form-group"><i class="fa fa-plus"></i></div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="brand" name="brand" th:value="${form.brand}" />
-                </div>
-                <div class="form-group"></div>
-                <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> search</button>
-            </form>
-        </div> -->
-
-        <!-- pagination -->
-        <div class="pages">
-            <nav class="page-nav">
-                <!-- <ul class="pager">
-                    <li class="previous">
-                        <span th:if="${page == 1}">&larr; prev</span>
-                        <a th:unless="${page == 1}" th:href="@{/showItemList(page = ${page}-1,name = ${form.name})}">&larr;
-                            prev</a>
-                    </li>
-                    <li class="next">
-                        <span th:if="${page} == ${totalPages}">next &rarr;</span>
-                        <a th:unless="${page} == ${totalPages}"
-                            th:href="@{/showItemList(page = ${page} + 1 , name = ${form.name})}">next
-                            &rarr;</a>
-                    </li>
-                </ul> -->
-            </nav>
-        </div>
 
         <!-- table -->
-        <!-- <form th:action="@{/deleteItem}" method="post"> -->
         <div class="table-responsive">
             <table id="item-table" class="table table-hover table-condensed">
                 <thead>
@@ -142,37 +80,7 @@
             </table>
         </div>
 
-        <!-- pagination -->
-        <div class="pages">
-            <nav class="page-nav">
-                <!-- <ul class="pager">
-                    <li class="previous">
-                        <span th:if="${page == 1}">&larr; prev</span>
-                        <a th:unless="${page == 1}" th:href="@{/showItemList(page = ${page} - 1)}">&larr; prev</a>
-                    </li>
-                    <li class="next">
-                        <span th:if="${page == 20}">next &rarr;</span>
-                        <a th:unless="${page == 20}" th:href="@{/showItemList(page = ${page} + 1)}">next &rarr;</a>
-                    </li>
-                </ul> -->
-            </nav>
-            <!-- ページ番号を指定して表示するフォーム -->
-            <!-- <div id="select-page">
-                <form class="form-inline" th:action="@{/showItemList}" method="post">
-                    <div class="form-group">
-                        <div class="input-group col-xs-6">
-                            <label></label>
-                            <input type="text" class="form-control" name="page" th:value="${page}" /> -->
-            <!-- 総ページ数 -->
-            <!-- <div class="input-group-addon">/ 20</div>
-                        </div>
-                        <div class="input-group col-xs-1">
-                            <button type="submit" class="btn btn-default">Go</button>
-                        </div>
-                    </div>
-                </form>
-            </div> -->
-        </div>
+    </div>
     </div>
 </body>
 
