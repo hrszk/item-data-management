@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.domain.Image;
@@ -39,8 +41,8 @@ public class UpdateItemController {
     private String imageFolder = "src/main/resources/static/item_image/";
     private String ImgExtract = "jpg";
 
-    @GetMapping("/toPageUpdateItem")
-    public String toPageUpdateItem(Integer id, Model model) {
+    @GetMapping("/showEditItem")
+    public String showEditItem(Integer id, Model model) {
         Item item = itemService.findByIdItem(id);
         model.addAttribute("item", item);
 
@@ -64,8 +66,17 @@ public class UpdateItemController {
         return "item/edit";
     }
 
+    /**
+     * 商品情報の更新
+     * 
+     * @param form 商品情報
+     * @return 商品詳細画面
+     * @throws IOException
+     */
     @PostMapping("/updateItem")
-    public String updateItem(UpdateItemForm form) throws IOException {
+    public String updateItem(@RequestParam("id") Integer id, UpdateItemForm form, RedirectAttributes attributes)
+            throws IOException {
+        attributes.addAttribute("id", form.getId());
 
         Item item = new Item();
         BeanUtils.copyProperties(form, item);
