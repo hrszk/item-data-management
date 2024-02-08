@@ -145,26 +145,30 @@
                             </td>
                             <td class="item-price" th:text="${'$'+item.price}">52.0</td>
                             <td class="item-category">
-                                <span th:text="${item.nameAll}"></span>
+                                <!-- <span th:each="category : ${#strings.split(item.nameAll, '/')}">
+                                    <a href="" th:text="${category}"></a>/
+                                </span> -->
+                                <a href="">
+                                    <span th:text="${#strings.substringBefore(item.nameAll,'/')}"></span>
+                                </a>/
+                                <a href="">
+                                    <span
+                                        th:text="${#strings.substringBefore(#strings.substringAfter(item.nameAll,'/'),'/')}"></span>
+                                </a>/
+                                <a href="">
+                                    <span th:text="${item.categoryName}"></span>
+                                </a>
                             </td>
                             <td class="item-brand"><a href="">
                                     <span th:text="${item.brand}">
                                         Razer
                                     </span></a></td>
                             <td class="item-condition" th:text="${item.condition}">3</td>
-                            <!-- <td>
-                                <button class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </td> -->
                         </form>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <!-- <div class="form-group"></div>
-            <button type="submit" class="btn btn-default"><i class="fa fa-angle-double-right"></i> delete</button>
-        </form> -->
 
         <!-- pagination -->
         <div class="pages">
