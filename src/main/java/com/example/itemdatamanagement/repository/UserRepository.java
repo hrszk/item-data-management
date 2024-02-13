@@ -55,6 +55,22 @@ public class UserRepository {
         return userList.isEmpty() ? null : userList.get(0);
     }
 
+    public User findByMailAddress(String mailAddress) {
+        String findByMailAddressSql = """
+                SELECT
+                    id,
+                    name,
+                    mail_address,
+                    password,
+                    authority
+                FROM users
+                WHERE mail_address=:mailAddress;
+                """;
+        SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", mailAddress);
+        List<User> userList = template.query(findByMailAddressSql, param, USER_ROW_MAPPER);
+        return userList.isEmpty() ? null : userList.get(0);
+    }
+
     public List<User> findAllUser() {
         String sql = """
                 SELECT * FROM users ORDER BY id;

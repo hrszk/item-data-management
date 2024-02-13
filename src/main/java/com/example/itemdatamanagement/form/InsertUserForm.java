@@ -1,16 +1,19 @@
 package com.example.itemdatamanagement.form;
 
-import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 
 public class InsertUserForm {
 
-    @NotBlank(message = "error:may not be empty")
+    @Length(min = 1, max = 50, message = "Please input between 1 and 50 characters.")
     private String name;
 
-    @NotBlank(message = "error:may not be empty")
+    @Email(message = "error.mail.format")
     private String mailAddress;
 
-    @NotBlank(message = "error:may not be empty")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,20}$", message = "error.password")
     private String password;
 
     public String getName() {

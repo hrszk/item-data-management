@@ -37,4 +37,8 @@ public class UserService {
     public void updateUser(User user) {
         userRepository.UpdateUser(user);
     }
+
+    public User findByMailAddress(String mailAddress) {
+        return userRepository.findByMailAddress(mailAddress);
+    }
 }

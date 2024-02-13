@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.itemdatamanagement.domain.User;
 import com.example.itemdatamanagement.form.InsertUserForm;
@@ -30,22 +31,33 @@ public class UserController {
     private HttpSession session;
 
     @GetMapping("/toPageUserRegister")
-    public String toPageUserRegister(InsertUserForm form, Model model) {
+    public String toPageUserRegister(Model model, InsertUserForm form) {
         return "user/register";
     }
 
     @PostMapping("/insertUser")
-    public String insertUser(@Validated InsertUserForm form, BindingResult result, Model model) {
+    public String insertUser(@Validated InsertUserForm form, BindingResult result,
+            RedirectAttributes redirectAttributes, Model model) {
+
         if (result.hasErrors()) {
-            return "redirect:/toPageUserRegister";
+            return "user/register";
         }
 
-        User user = new User();
-        BeanUtils.copyProperties(form, user);
-        user.setAuthority(0);
+        User user1 = userService.findByMailAddress(form.getMailAddress());
 
-        userService.insertUser(user);
-        return "user/login";
+        if (user1 == null) {
+
+            User user = new User();
+            BeanUtils.copyProperties(form, user);
+            user.setAuthority(0);
+
+            userService.insertUser(user);
+            redirectAttributes.addFlashAttribute("user", user);
+            return "user/login";
+        } else {
+            model.addAttribute("error", "error.duplication");
+            return "user/register";
+        }
     }
 
     /**
