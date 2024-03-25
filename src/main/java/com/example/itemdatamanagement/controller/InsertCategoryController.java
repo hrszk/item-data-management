@@ -1,5 +1,7 @@
 package com.example.itemdatamanagement.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.itemdatamanagement.domain.Category;
 import com.example.itemdatamanagement.service.CategoryService;
 
+
 @Controller
 @RequestMapping({ "", "/" })
 public class InsertCategoryController {
     @Autowired
     private CategoryService categoryService;
+
+    Logger logger = LoggerFactory.getLogger(InsertCategoryController.class);
 
     @GetMapping("/toPageAddCategory")
     public String toPageAddCategory() {
@@ -23,6 +28,7 @@ public class InsertCategoryController {
     @PostMapping("/addCategory")
     public String addCategory(String name) {
         categoryService.insertParentCategory(name);
+        logger.info("親カテゴリ {} が追加されました",name);
         return "redirect:/showCategoryList";
     }
 
@@ -34,6 +40,7 @@ public class InsertCategoryController {
         category.setNameAll(parentCategory + "/" + name);
 
         categoryService.insertCategory(category);
+        logger.info("子カテゴリ {} が追加されました",name);
         return "redirect:/showCategoryList";
     }
 
@@ -45,6 +52,7 @@ public class InsertCategoryController {
         category.setNameAll(parentCategory + "/" + childCategory + "/" + name);
 
         categoryService.insertCategory(category);
+        logger.info("孫カテゴリ {} が追加されました",name);
         return "redirect:/showCategoryList";
     }
 }

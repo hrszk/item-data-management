@@ -13,7 +13,7 @@ public class InsertUserForm {
     @Email(message = "error.mail.format")
     private String mailAddress;
 
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,20}$", message = "error.password")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,20}$", message = "Please input 8 or more characters and up to 20 characters, including uppercase letters, lowercase letters, and half-width numbers")
     private String password;
 
     public String getName() {

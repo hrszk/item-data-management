@@ -1,17 +1,33 @@
 package com.example.itemdatamanagement.form;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class InsertItemForm {
 
+    @NotBlank(message = "error.not.empty")
+    @Length(max = 100, message = "error.max")
     private String name;
+
+    @NotNull(message = "error.not.empty")
+    @Range(min = 0, max = 80000, message = "error.numRange")
     private double price;
+
     private String parentCategory;
     private String childCategory;
     private String grandChild;
     private String brand;
+
+    @NotNull(message = "error.not.empty")
     private Integer condition;
+
+    @NotBlank(message = "error.not.empty")
     private String description;
+
     private MultipartFile image;
 
     public String getName() {
