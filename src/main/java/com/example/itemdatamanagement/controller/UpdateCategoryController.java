@@ -40,6 +40,7 @@ public class UpdateCategoryController {
         Category category = new Category();
         BeanUtils.copyProperties(form, category);
         category.setNameAll(childCategoryNameAll);
+        
         // 中カテゴリの更新
         categoryService.updateCategory(category);
 

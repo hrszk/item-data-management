@@ -2,6 +2,8 @@ package com.example.itemdatamanagement.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,8 @@ public class UserController {
     @Autowired
     private HttpSession session;
 
+    Logger logger=LoggerFactory.getLogger(UserController.class);
+
     @GetMapping("/toPageUserRegister")
     public String toPageUserRegister(Model model, InsertUserForm form) {
         return "user/register";
@@ -52,6 +56,8 @@ public class UserController {
             user.setAuthority(0);
 
             userService.insertUser(user);
+            logger.info("新規ユーザーを追加しました");
+
             redirectAttributes.addFlashAttribute("user", user);
             return "user/login";
         } else {
@@ -131,6 +137,7 @@ public class UserController {
     @PostMapping("/deleteUser")
     public String deleteUser(Integer id) {
         userService.deleteUser(id);
+        logger.info("ユーザーid {} を削除しました",id);
         return "redirect:/showUserList";
     }
 
