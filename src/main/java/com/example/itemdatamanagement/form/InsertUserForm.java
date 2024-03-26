@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public class InsertUserForm {
 
@@ -12,8 +13,9 @@ public class InsertUserForm {
 
     @Email(message = "error.mail.format")
     private String mailAddress;
-
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,20}$", message = "Please input 8 or more characters and up to 20 characters, including uppercase letters, lowercase letters, and half-width numbers")
+    
+    @Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{8,20}$", message = "Password must contain at least one uppercase letter, one lowercase letter, and one digit")
     private String password;
 
     public String getName() {

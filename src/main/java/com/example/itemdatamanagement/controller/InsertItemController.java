@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ import com.example.itemdatamanagement.service.ItemService;
 @Controller
 @RequestMapping({ "", "/" })
 public class InsertItemController {
+
+    Logger logger=LoggerFactory.getLogger(InsertItemController.class);
 
     @Autowired
     private ItemService itemService;
@@ -83,6 +87,7 @@ public class InsertItemController {
         }
 
         itemService.insertItem(item);
+        logger.info("商品 {} を追加しました",form.getName());
 
         if (form.getImage().getSize() != 0) {
 

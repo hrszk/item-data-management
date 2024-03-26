@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.itemdatamanagement.domain.ItemAndCategory;
 import com.example.itemdatamanagement.domain.ItemCsv;
 import com.example.itemdatamanagement.service.ItemAndCategoryService;
-import com.example.itemdatamanagement.service.ItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
